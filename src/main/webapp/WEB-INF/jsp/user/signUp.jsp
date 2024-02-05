@@ -71,13 +71,13 @@
 						if (data.is_duplicated_id) {
 							$("#idCheckDuplicated").removeClass("d-none");
 						} else {
-							$("#idCheckOk").addClass("d-none");
+							$("#idCheckOk").removeClass("d-none");
 						}
 					} else {
 						alert(data.error_message);
 					}
-				}
-				, error(request, status, error) {
+				}	
+				, error:function(request, status, error) {
 					alert("중복확인에 실패하였습니다.");
 				}
 			});
@@ -85,7 +85,7 @@
 		
 		
 		//1. 가입하기를 눌렀을 때
-		$('#signUpBtn').on('submit', function(e) {
+		$('#signUpForm').on('submit', function(e) {
 			e.preventDefault();
 			//alert("회원가입");
 			
@@ -117,7 +117,25 @@
 				return false;
 			}
 			
+			// 중복확인 후 사용 가능한 아이디인지 확인
+			if ($("#idCheckOk").hasClass("d-none")) {
+				alert("아이디 중복확인을 다시 해주세요.");
+				return false;
+			}
 			
+			// ajax
+			let url = $(this).attr("action");
+			let params = $(this).serialize();
+			
+			$.post(url, params)
+			.done(function(data) {
+				if (data.code == 200) {
+					alert("가입을 환영합니다. 로그인 해주세요.");
+					location.href = "/user/sign-in-view";
+				} else {
+					alert(data.error_message);
+				}
+			});
 		});
 	});
 </script>

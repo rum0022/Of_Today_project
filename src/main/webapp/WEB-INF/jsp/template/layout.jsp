@@ -15,8 +15,13 @@
 </head>
 <body>
 	<div id="wrap">
-		<header>
+		<header class="d-flex">
+			<div class="logo1 col-10">
 			<jsp:include page="../include/header.jsp"></jsp:include>
+			</div>
+			<div class="calendar d-flex align-items-center justify-content-center">
+			<h2>달력</h2>
+			</div>
 		</header>
 		<section class="contents d-flex">
 			<section class="content1">
