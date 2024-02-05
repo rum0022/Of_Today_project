@@ -1,0 +1,21 @@
+@charset "UTF-8";
+#wrap {width: 100%}
+header {
+	height: 120px;
+	border-bottom: 10px solid orange;
+	}
+footer {
+	height: 50px;
+	border-top: 10px solid orange;
+}	
+.contents {
+	min-height: 550px; 
+    }	
+.content1 {
+	width: 85%;
+}    
+
+aside {
+	width: 15%;
+	border-left: 10px solid orange;
+}
