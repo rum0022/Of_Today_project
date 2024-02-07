@@ -6,12 +6,12 @@
  	<insert id="insertMemo">
  		INSERT INTO `memo`
  		(
-	 		userId
-			, subject
-			, content
-			, imagePath
-			, createdAt
-			, updatedAt
+	 		`userId`
+			, `subject`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
  		)
  		VALUES
  		(
@@ -25,4 +25,18 @@
  		)
  	</insert>
  
+ 	<select id="selectMemoByuserId" resultType="com.project.memo.domain.Memo">
+ 		SELECT
+ 			`id`
+ 			, `userId`
+			, `subject`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`memo`
+		WHERE
+			`userId` = #{userId}		
+ 	</select>
  </mapper>

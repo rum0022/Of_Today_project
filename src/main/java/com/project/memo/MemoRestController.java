@@ -21,6 +21,14 @@ public class MemoRestController {
 	@Autowired
 	private MemoBO memoBO;
 	
+	/**
+	 * 메모 insert API
+	 * @param subject
+	 * @param content
+	 * @param file
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> create(
 			@RequestParam("subject") String subject,
@@ -42,4 +50,6 @@ public class MemoRestController {
 		 	
 		return result; 	
 	}
+	
+	
 }
