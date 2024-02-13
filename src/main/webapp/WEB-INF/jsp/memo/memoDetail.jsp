@@ -21,7 +21,7 @@
 		</div>
 		
 		<div class="d-flex justify-content-between">
-			<button type="button" id="deleteBtn" class="btn btn-info">삭제</button>
+			<button type="button" id="deleteBtn" class="btn btn-info" data-memo-id="${memo.id}">삭제</button>
 			<div>
 				<a href="/memo/memo-list-view" class="btn btn-dark">목록</a>
 				<button type="button" id="updateBtn" class="btn btn-secondary" data-memo-id="${memo.id}">수정</button>
@@ -86,6 +86,31 @@
 					alert("글을 수정하는데 실패했습니다.");
 				  }
 			});
+		});
+		
+		// 삭제
+		$("#deleteBtn").on("click", function() {
+			 // alert("삭제");
+			let memoId = $(this).data("memo-id");
+			  // alert(memoId);
+			$.ajax({ 
+				type:"DELETE"
+				, url:"/memo/delete"
+				, data:{"memoId":memoId}
+			 
+			 	, success:function(data) {
+			 		if (data.code == 200) {
+			 			// 성공
+			 			location.href = "/memo/memo-list-view"; 
+			 		} else {
+			 			// 실패
+			 			alert(data.error_message);
+			 		}
+			 	}
+			 	, error:function(request, status, error) {
+			 		alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
+			 	}
+			 });
 		});
 	});
 </script>

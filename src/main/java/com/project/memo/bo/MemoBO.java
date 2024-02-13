@@ -52,7 +52,7 @@ public class MemoBO {
 		Memo memo = memoMapper.selectMemoByMemoIdUserId(memoId, userId);
 		
 		if (memo == null) { // 드문경우 기존글을 가져왔는데 없는경우
-			log.info("[글 수정] post is null. postId:{}, userId:{}", memoId, userId);
+			log.info("[글 수정] memo is null. memoId:{}, userId:{}", memoId, userId);
 			return;
 		}
 		
@@ -70,4 +70,20 @@ public class MemoBO {
 		memoMapper.updateMemoByMemoId(memoId, subject, content, imagePath);	
 	}
   }
+	public void deleteMemoByMemoIdUserId(int memoId, int userId) {
+		// 기존글이 있는지 확인
+		Memo memo = memoMapper.selectMemoByMemoIdUserId(memoId, userId);
+		if (memo == null) {
+			log.info("[글삭제]memo is null. memoId:{}, userId:{}", memoId, userId);
+			return;
+		}
+		
+		// DB삭제한 행의 갯수
+		int deleteRowCount = memoMapper.deleteMemoByMemoId(userId);
+		
+		// 이미지가 존재하면 삭제 && DB삭제도 성공했을때 
+		if (deleteRowCount > 0 && memo.getImagePath() != null) {
+			fileManagerService.deleteFile(memo.getImagePath());
+		} 
+	}
 }	

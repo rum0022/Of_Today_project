@@ -28,4 +28,6 @@ public interface MemoMapper {
 			@Param("subject") String subject, 
 			@Param("content") String content, 
 			@Param("imagePath") String imagePath);
+	
+	public int deleteMemoByMemoId(int memoId);
 }

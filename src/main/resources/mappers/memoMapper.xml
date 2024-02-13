@@ -70,4 +70,11 @@
  			`id` = #{memoId}	
  	</update>
  	
+ 	<delete id="deleteMemoByMemoId">
+		DELETE
+		FROM
+			`memo`
+		WHERE
+			`id` = #{memoId}	
+	</delete>
  </mapper>

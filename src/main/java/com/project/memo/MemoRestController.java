@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,7 +63,7 @@ public class MemoRestController {
 		
 		// 글쓴이 번호 - session에 있는 userId를 꺼낸다
 			int userId = (int)session.getAttribute("userId"); 
-			String userLoginId = (String)session.getAttribute("loginId");
+			String userLoginId = (String)session.getAttribute("userLoginId");
 			
 		// update DB
 			memoBO.updateMemoById(userId, userLoginId, memoId, subject, content, file);
@@ -74,5 +75,21 @@ public class MemoRestController {
 			return result;
 	}
 	
-	
+	@DeleteMapping("/delete")
+	public Map<String, Object> delete(
+			@RequestParam("memoId") int memoId,
+			HttpSession session) {
+		
+		int userId = (int)session.getAttribute("userId");
+		
+		// delete db
+		memoBO.deleteMemoByMemoIdUserId(memoId, userId);
+		
+		// 응답값
+			Map<String, Object> result = new HashMap<>();
+		
+			result.put("code", 200);
+			result.put("result", "성공");
+			return result;
+	}
 }
