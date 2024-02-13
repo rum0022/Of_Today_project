@@ -25,7 +25,7 @@
  		)
  	</insert>
  
- 	<select id="selectMemoByuserId" resultType="com.project.memo.domain.Memo">
+ 	<select id="selectMemoListByuserId" resultType="com.project.memo.domain.Memo">
  		SELECT
  			`id`
  			, `userId`
@@ -39,4 +39,35 @@
 		WHERE
 			`userId` = #{userId}		
  	</select>
+ 	
+ 	<select id="selectMemoByMemoIdUserId" resultType="com.project.memo.domain.Memo">
+ 		SELECT
+ 			`id`
+ 			, `userId`
+			, `subject`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`memo`
+		WHERE
+			`id` = #{memoId}
+	 	AND `userId` = #{userId}
+ 	</select>
+ 	
+ 	
+ 	<update id="updateMemoByMemoId">
+ 		UPDATE `memo`
+ 		SET
+ 			`subject` = #{subject}
+ 			, `content` = #{content}
+ 			<if test="imagePath != null">  <!-- 너무 중요!!!! 이미지가 있을때만 바꿔줌 -->
+ 			, `imagePath` = #{imagePath}
+ 			</if>
+ 			, `updatedAt` = NOW()
+ 		WHERE
+ 			`id` = #{memoId}	
+ 	</update>
+ 	
  </mapper>

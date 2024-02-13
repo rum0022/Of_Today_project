@@ -9,7 +9,7 @@
 		</div>
 		
 		<div class="d-flex justify-content-between">
-			<button type="button" id="memoListBtn" class="btn btn-dark">목록</button>
+			<a href="/memo/memo-list-view" class="btn btn-dark">목록</a>
 			<div>
 				<button type="button" id="clearBtn" class="btn btn-secondary">모두지우기</button>
 				<button type="button" id="saveBtn" class="btn btn-info">저장</button>
@@ -75,6 +75,13 @@
 					alert("글을 저장하는데 실패 했습니다.");
 				}
 			});
+		});
+		
+		// 모두지우기
+		$("#clearBtn").on("click", function() {
+			//alert("모두지우기");
+			$("#subject").val("");
+			$("#content").val("");
 		});
 	});
 </script>

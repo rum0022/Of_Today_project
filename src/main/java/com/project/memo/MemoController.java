@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.memo.bo.MemoBO;
 import com.project.memo.domain.Memo;
@@ -33,7 +34,7 @@ public class MemoController {
 	 	if (userId == null) {
 	 		return "redirect:/user/sign-in-view";
 	 	}
-		List<Memo> memoList = memoBO.getMemoByuserId(userId);
+		List<Memo> memoList = memoBO.getMemoListByuserId(userId);
 		
 		model.addAttribute("memoList", memoList);
 		model.addAttribute("viewName", "memo/memoList");
@@ -51,5 +52,18 @@ public class MemoController {
 		return "template/layout";
 	}
 	
-	
+	@GetMapping("/memo-detail-view")
+	public String memoDetailView(
+			@RequestParam("memoId") int memoId,
+			HttpSession session,
+			Model model) {
+		
+		int userId = (int)session.getAttribute("userId");
+		
+		Memo memo = memoBO.getMemoByMemoIdUserId(memoId, userId);
+		
+		model.addAttribute("memo", memo);
+		model.addAttribute("viewName", "memo/memoDetail");
+		return "template/layout";
+	}
 }

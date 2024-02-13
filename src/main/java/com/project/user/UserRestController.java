@@ -107,4 +107,15 @@ public class UserRestController {
 	    }
 		return result;
 	}
+	
+	@RequestMapping("/sign-out")
+	public String signOut(HttpSession session) {
+		// session에 있는 내용을 모두 비운다.
+		session.removeAttribute("userId");
+		session.removeAttribute("userLoginId");
+		session.removeAttribute("userName");
+		
+		// 이미있는페이지로 리다이렉트 로그인화면으로 이동
+		return "redirect:/user/sign-in-view";
+	}
 }

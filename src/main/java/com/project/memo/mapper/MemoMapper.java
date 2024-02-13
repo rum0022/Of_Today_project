@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.memo.domain.Memo;
 
@@ -16,5 +17,15 @@ public interface MemoMapper {
 			@Param("content") String content, 
 			@Param("imagePath") String imagePath);
 	
-	public List<Memo> selectMemoByuserId(Integer userId);
+	public List<Memo> selectMemoListByuserId(Integer userId);
+	
+	public Memo selectMemoByMemoIdUserId(
+			@Param("memoId") int memoId,
+			@Param("userId") int userId);
+	
+	public void updateMemoByMemoId(
+			@Param("memoId") int memoId,
+			@Param("subject") String subject, 
+			@Param("content") String content, 
+			@Param("imagePath") String imagePath);
 }

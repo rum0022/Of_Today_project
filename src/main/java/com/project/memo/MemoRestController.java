@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,6 +50,28 @@ public class MemoRestController {
 		 	result.put("result", "성공");
 		 	
 		return result; 	
+	}
+	
+	@PutMapping("/update")
+	public Map<String, Object> update(
+			@RequestParam("memoId") int memoId,
+			@RequestParam("subject") String subject,
+			@RequestParam("content") String content,
+			@RequestParam(value = "file", required=false) MultipartFile file,
+			HttpSession session) {
+		
+		// 글쓴이 번호 - session에 있는 userId를 꺼낸다
+			int userId = (int)session.getAttribute("userId"); 
+			String userLoginId = (String)session.getAttribute("loginId");
+			
+		// update DB
+			memoBO.updateMemoById(userId, userLoginId, memoId, subject, content, file);
+		// 응답값
+			Map<String, Object> result = new HashMap<>();
+			result.put("code", 200);
+			result.put("result", "성공");
+			
+			return result;
 	}
 	
 	
