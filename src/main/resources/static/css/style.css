@@ -20,3 +20,9 @@ aside {
 	width: 15%;
 	border-left: 10px solid orange;
 }
+
+.contents-box {width:650px;}
+
+#writeTextArea {height:100px;}
+
+.comment-input {width:565px;}

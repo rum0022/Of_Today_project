@@ -19,9 +19,9 @@ public class FileManagerService {
 	public static final String FILE_UPLOAD_PATH ="C:\\Users\\PC2212\\Desktop\\choiareum\\7_project\\workspace\\images/";
 	
 	// input : file원본 , userLoginId<-폴더명을 짓기 위함  output:이미지경로
-	public String saveFile(String loginId, MultipartFile file) {
+	public String saveFile(String userLoginId, MultipartFile file) {
 		// 폴더 (디렉토리) 생성
-		String directoryName = loginId + "_" + System.currentTimeMillis();
+		String directoryName = userLoginId + "_" + System.currentTimeMillis();
 		String filePath = FILE_UPLOAD_PATH + directoryName;
 		File directory = new File(filePath);
 		if (directory.mkdir() == false) { // 폴더 생성 실패 시 이미지 경로는 null로 리턴

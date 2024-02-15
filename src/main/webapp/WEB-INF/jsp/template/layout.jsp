@@ -12,6 +12,11 @@
 
 <!-- 내가 만든 스타일 시트 -->
 <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
+<!-- datepicker-->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </head>
 <body>
 	<div id="wrap">

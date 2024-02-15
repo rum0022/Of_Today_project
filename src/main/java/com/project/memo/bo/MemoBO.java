@@ -65,11 +65,11 @@ public class MemoBO {
 			if (imagePath != null && memo.getImagePath() != null) {
 			// 업로드 성공하고 기존 이미지 있으면 서버의 파일제거
 				fileManagerService.deleteFile(memo.getImagePath());
+			}
 		}
-		
-		memoMapper.updateMemoByMemoId(memoId, subject, content, imagePath);	
+		memoMapper.updateMemoByMemoId(memoId, subject, content, imagePath);		
 	}
-  }
+	
 	public void deleteMemoByMemoIdUserId(int memoId, int userId) {
 		// 기존글이 있는지 확인
 		Memo memo = memoMapper.selectMemoByMemoIdUserId(memoId, userId);
@@ -79,7 +79,7 @@ public class MemoBO {
 		}
 		
 		// DB삭제한 행의 갯수
-		int deleteRowCount = memoMapper.deleteMemoByMemoId(userId);
+		int deleteRowCount = memoMapper.deleteMemoByMemoId(memoId);
 		
 		// 이미지가 존재하면 삭제 && DB삭제도 성공했을때 
 		if (deleteRowCount > 0 && memo.getImagePath() != null) {

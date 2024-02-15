@@ -40,7 +40,7 @@ public class MemoRestController {
 		
 		// 글쓴이 번호 - session에 있는 userId를 꺼낸다
 		int userId = (int)session.getAttribute("userId"); 
-		String userLoginId = (String)session.getAttribute("loginId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		// insert
 		memoBO.addMemo(userId, userLoginId, subject, content, file);

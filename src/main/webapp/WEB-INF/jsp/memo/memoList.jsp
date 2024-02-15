@@ -3,9 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>     
 <div class="d-flex justify-content-center">
-
+	<h1 class="mr-2">Memo</h1>
 	<div class="w-50">
-		<h1>MEMO</h1>
+		
 		<table class="table">
 			<thead>
 				<tr>

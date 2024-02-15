@@ -9,4 +9,25 @@
  		FROM
  			`diary`	
  	</select>
+ 	
+ 	<insert id="insertDiary">
+ 		INSERT INTO `diary`
+ 		(
+	 		userId
+			,decidedDay
+			,content
+			,imagePath
+			,createdAt
+			,updatedAt
+ 		)
+ 		VALUES
+ 		(
+ 			#{userId}
+ 			, #{decidedDay}
+ 			, #{content}
+ 			, #{imagePath}
+ 			, NOW()
+ 			, NOW()	
+ 		)
+ 	</insert>
  </mapper>
