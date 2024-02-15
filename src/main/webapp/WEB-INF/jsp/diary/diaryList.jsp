@@ -31,25 +31,25 @@
 			<div class="card border rounded mt-3">
 				<%-- 글쓴이, 더보기(삭제) --%>
 				<div class="p-2 d-flex justify-content-between">
-					<span class="font-weight-bold"></span>
+					<span class="font-weight-bold">${userLoginId}</span>
 					<%-- 날짜 --%>
-				    <span class="font-weight-bold">5/2</span>
+				    <span class="font-weight-bold">${diary.decidedDay}</span>
 					<%--(더보기 ... 버튼)--%>
-					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-post-id="${card.post.id}">
+					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${diary.id}">
 						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
 					</a>
 					
 				</div>	
 				
-				<%-- 카드 이미지 --%>
-				<div class="card-img">
-					<img src="#" class="w-100" alt="본문 이미지">
+				<%-- 이미지 --%>
+				<c:if test="${diary.imagePath eq false}">
+				<div class="card-img d-flex ">
+					<img src="${diary.imagePath}" class="w-50" alt="본문 이미지">
 				</div>
-				
+				</c:if>
 				<%-- 글 --%>
 				<div class="card-post m-3">
-					<span class="font-weight-bold"></span>
-					<span></span>
+					<span>${diary.content}</span>
 				</div>			
 			 </div>  <%--// 카드1 끝 --%>
 		</c:forEach>

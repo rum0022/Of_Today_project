@@ -22,7 +22,7 @@ public class DiaryBO {
 	
 	// select
 	public List<DiaryEntity> getDiaryList() {
-		return diaryRepository.findAllByOrderByIdDesc();
+		return diaryRepository.findAllByOrderByDecidedDayDesc();
 	}
 	
 	// insert
