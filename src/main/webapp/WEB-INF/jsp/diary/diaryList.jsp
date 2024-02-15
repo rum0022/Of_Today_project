@@ -5,7 +5,7 @@
 	<h1>Diary</h1>
 	<div class="contents-box">
 		<div class="write-box border rounded m-3">
-            <input type="text" id="datepickerOption" placeholder="날짜를 입력해주세요" class="decidedDay w-100">
+            <input type="text" id="decidedDay" placeholder="날짜를 입력해주세요" class="w-100">
 			<textarea id="writeTextArea" placeholder="내용을 입력해주세요" class="w-100 border-0"></textarea>
 			
 			<div class="d-flex justify-content-between">
@@ -26,6 +26,7 @@
 		
 		<%-- 일기 영역 --%>
 		<div class="diary-box my-5">
+			<c:forEach items="${diaryList}" var="diary">
 			<%-- 카드1 --%>
 			<div class="card border rounded mt-3">
 				<%-- 글쓴이, 더보기(삭제) --%>
@@ -51,7 +52,7 @@
 					<span></span>
 				</div>			
 			 </div>  <%--// 카드1 끝 --%>
-
+		</c:forEach>
 		</div> <%--// 타임라인 영역 끝  --%>
 	</div> <%--// contents-box 끝  --%>
 </div>
@@ -59,7 +60,7 @@
 <script>
 	$(document).ready(function() {
 		// 날짜입력
-		$('#datepickerOption').datepicker({
+		$('#decidedDay').datepicker({
 			dateFormat:"yy-mm-dd"   // 2023-02-09
             , changeMonth:true     // 월을 선택(셀렉트)
             , changeYear:true      // 년을 선택(셀렉트)
@@ -103,7 +104,7 @@
 		// 글쓰기
 		$("#writeBtn").on("click", function() {
 			// alert("게시");
-			let decidedDay = $(".decidedDay").val();
+			let decidedDay = $("#decidedDay").val();
 			let content = $("#writeTextArea").val();
 			let fileName = $("#file").val();
 			
@@ -130,6 +131,7 @@
 			}
 			// 폼태그 구성하고 이미지
 			let formData = new FormData();
+			formData.append("decidedDay", decidedDay);
 			formData.append("content", content);
 			formData.append("file", $("#file")[0].files[0]);
 			
@@ -154,6 +156,7 @@
 				, error: function(e) {
 					alert("글을 저장하는데 실패 했습니다.");
 				}
+			});
 		});
-	});
+	});		
 </script>
