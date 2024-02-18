@@ -2,27 +2,47 @@
 #wrap {width: 100%}
 header {
 	height: 120px;
-	border-bottom: 10px solid orange;
-	}
+	border-bottom: 2px solid rgb(192, 192, 192)	}
+
+a, a:hover {text-decoration: none;}
 
 footer {
 	height: 50px;
-	border-top: 10px solid orange;
+	border-top: 2px solid rgb(192, 192, 192)
 }	
 .contents {
-	min-height: 550px; 
+	min-height: 800px; 
     }	
 .content1 {
 	width: 85%;
 }    
 
-aside {
-	width: 15%;
-	border-left: 10px solid orange;
+nav .nav-link {
+	font-size: larger;
+	color: #000;
+	line-height: 3;
 }
 
-.contents-box {width:650px;}
+.contents nav .nav-link:hover {
+	background-color: rgb(209 213 219);
+	color: #000;
+	font-size: larger;}
+	
+aside {
+	width: 15%;
+	border-left: 2px solid rgb(192, 192, 192)
+}
+
+.contents-box {
+	width:650px;
+}
 
 #writeTextArea {height:100px;}
 
 .comment-input {width:565px;}
+
+#calendar {
+        max-width: 900px;
+        margin: 40px auto;
+      }
+    

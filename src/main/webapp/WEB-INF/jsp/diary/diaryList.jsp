@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center mt-5">
 	<h1>Diary</h1>
 	<div class="contents-box">
 		<div class="write-box border rounded m-3">
@@ -13,9 +13,15 @@
 				<%--file 태그를 숨겨두고 이미지를 클릭하면 file태그를 클릭한 것과 같은 효과 --%>
 				<input type="file" id="file" accept=".jpg, .jpeg, .gif, .png" class="d-none">
 				
+				<%-- 공개 비공개 --%>	
+					<div class="form-check form-check-inline ml-2">
+    					<input class="form-check-input" type="checkbox" name="isOpen" id="isOpen">
+    					<label class="form-check-label">비밀글 설정</label>
+					</div>
+				
 				<%--이미지에 마우스를 올리면 마우스 커서가 변하도록 적용 --%>
 					<a href="#" id="fileUploadBtn"><img width="35" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png"></a>
-					
+				
 				<%-- 업로드 된 임시 이미지 파일 이름 나타내는 곳 --%>	
 					<div id="fileName" class="ml-2"></div>
 				</div>
@@ -31,7 +37,12 @@
 			<div class="card border rounded mt-3">
 				<%-- 글쓴이, 더보기(삭제) --%>
 				<div class="p-2 d-flex justify-content-between">
-					<span class="font-weight-bold">${userLoginId}</span>
+					<div class="d-flex">
+					<c:if test="${diary.isOpen eq 1}">
+					<img src="/static/img/close.jpg" width=25>
+					</c:if>
+					<span class="font-weight-bold ml-2">${userLoginId}</span>
+					</div>
 					<%-- 날짜 --%>
 				    <span class="font-weight-bold">${diary.decidedDay}</span>
 					<%--(더보기 ... 버튼)--%>
@@ -59,6 +70,7 @@
 
 <script>
 	$(document).ready(function() {
+		
 		// 날짜입력
 		$('#decidedDay').datepicker({
 			dateFormat:"yy-mm-dd"   // 2023-02-09
@@ -106,6 +118,7 @@
 			// alert("게시");
 			let decidedDay = $("#decidedDay").val();
 			let content = $("#writeTextArea").val();
+			let isOpen = $("#isOpen").val();
 			let fileName = $("#file").val();
 			
 			if (!decidedDay) {
@@ -133,6 +146,7 @@
 			let formData = new FormData();
 			formData.append("decidedDay", decidedDay);
 			formData.append("content", content);
+			formData.append("isOpen", isOpen);
 			formData.append("file", $("#file")[0].files[0]);
 			
 			$.ajax({
@@ -157,6 +171,6 @@
 					alert("글을 저장하는데 실패 했습니다.");
 				}
 			});
-		});
-	});		
+		});	
+	});	
 </script>

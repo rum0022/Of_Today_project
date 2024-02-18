@@ -27,6 +27,7 @@ public class DiaryRestController {
 	public Map<String, Object> create(
 			@RequestParam("content") String content,
 			@RequestParam("decidedDay") @DateTimeFormat(pattern = "yyyy-MM-dd") Date decidedDay,
+			@RequestParam("isOpen") boolean isOpen,
 			@RequestParam(value = "file", required=false) MultipartFile file,
 			HttpSession session) {
 		
@@ -42,7 +43,7 @@ public class DiaryRestController {
 			return result;
 		}
 		// insert DB
-		diaryBO.addDiary(userId, userLoginId, content, decidedDay, file);
+		diaryBO.addDiary(userId, userLoginId, content, decidedDay, isOpen, file);
 		
 		result.put("code", 200);
 		result.put("result", "성공");

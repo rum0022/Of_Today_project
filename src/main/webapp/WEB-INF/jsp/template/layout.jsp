@@ -17,6 +17,13 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<!-- full calender -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+<script src="../dist/index.global.min.js"></script>
+
 </head>
 <body>
 	<div id="wrap">
@@ -25,14 +32,14 @@
 			<jsp:include page="../include/header.jsp"></jsp:include>
 			</div>
 			<div class="calendar d-flex align-items-center justify-content-center">
-			<h2>달력</h2>
+			<h2 class="ml-5">달력그림</h2>
 			</div>
 		</header>
 		<section class="contents d-flex">
 			<section class="content1">
 				<jsp:include page="../${viewName}.jsp"></jsp:include>
 			</section>
-			<aside class="d-flex align-items-center">
+			<aside>
 				<jsp:include page="../include/aside.jsp"></jsp:include>
 			</aside>
 		</section>

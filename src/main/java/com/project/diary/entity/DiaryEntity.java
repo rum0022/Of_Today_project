@@ -40,7 +40,11 @@ public class DiaryEntity {
 	
 	private String content;
 	
+	@Column(name = "imagePath")
 	private String imagePath;
+	
+	@Column(name = "isOpen", columnDefinition = "TINYINT(1)")
+	private boolean isOpen;
 	
 	@UpdateTimestamp
 	@Column(name = "createdAt", updatable = false)
