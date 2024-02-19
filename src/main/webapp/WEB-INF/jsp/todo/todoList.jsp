@@ -3,7 +3,7 @@
     <h1 class="text-center mt-5">To Do List</h1>
 <div class="d-flex justify-content-center">  
 	<div class="contents-box">
-	    <input type="text" id="todoDay" placeholder="ex) 2023-01-01" class="w-30 mb-2  border border-">
+	    <input type="text" id="todoDay" placeholder="ex) 2023-01-01" class="w-30 mb-2">   
 	  <%-- 게시 --%>
 	    <div class="d-flex align-items-center">
         	<div class="input-group">
@@ -28,3 +28,37 @@
 			 </div>  
 	</div>
 </div>		
+
+<script>
+	$(document).ready(function() {
+		
+		// 날짜입력
+		$('#todoDay').datepicker({
+			onSelect: function(date, instance) {
+
+				let todoDay = $("#todoDay").val();
+				
+		        $.ajax ({
+		              type: "POST"
+		              , url: "/todo/calendar"
+		              , data: {"todoDay":todoDay}
+		              , success: function(data) {
+		            	  if (data.code == 200) {
+								location.reload();
+							} else if (data.code == 500) {// 비로그인 일 때
+								location.href = "/user/sign-in-view";
+							} else {
+								alert("data.error_message");
+							}
+		              	}
+		        	  , error: function(request, status, error) {
+						alert("날짜를 저장하는데 실패 했습니다.");
+						}
+		              
+		         });  
+		     }
+		});
+		
+		
+	});
+</script>
