@@ -8,29 +8,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.project.comment.bo.CommentBO;
-import com.project.comment.domain.Comment;
-import com.project.diary.bo.DiaryBO;
-import com.project.diary.entity.DiaryEntity;
+import com.project.diary.bo.DiaryTimeLineBO;
+import com.project.diary.domain.DiaryPageView;
+
+import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/diary")
 @Controller
 public class DiaryTimeLineController {
 	
 	@Autowired
-	private CommentBO commentBO;
-
-	@Autowired
-	private DiaryBO diaryBO;
+	private DiaryTimeLineBO diaryTimeLineBO;
 	
 	@GetMapping("/diary-list-view")
-	public String diaryListView(Model model) {
+	public String diaryListView(Model model, HttpSession session) {
 		
-		List<DiaryEntity> diaryList = diaryBO.getDiaryList();
-		List<Comment> commentList = commentBO.getComment();
+		Integer userId = (Integer)session.getAttribute("userId");
 		
-		model.addAttribute("diaryList", diaryList);
-		model.addAttribute("commentList", commentList);
+		List<DiaryPageView> diaryPageViewList= diaryTimeLineBO.generateDiaryPageView(userId);
+		
+		model.addAttribute("diaryPageViewList", diaryPageViewList);
 		model.addAttribute("viewName", "diary/diaryList");
 		return "template/layout";
 	}

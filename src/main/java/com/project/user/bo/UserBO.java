@@ -32,7 +32,7 @@ public class UserBO {
 		return userRepository.findByLoginIdAndPassword(loginId, password);
 	}
 	
-	// commentView필요
+	// commentView에서 필요
 	public UserEntity getUserEntityByUserId(int id) {
 		return userRepository.findById(id).orElse(null);
 	}
