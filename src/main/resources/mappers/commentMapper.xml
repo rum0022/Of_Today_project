@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.project.comment.mapper.CommentMapper">
+ 
+ 	<insert id="insertComment">
+ 		INSERT INTO `comment`
+ 		(	
+			`diaryId`
+			,`userId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		)
+ 		VALUES
+ 		(
+ 			#{diaryId}
+ 			, #{userId}
+ 			, #{content}
+ 			, NOW()
+ 			, NOW()
+ 		)
+ 	</insert>
+ 	
+ 	<select id="selectComment" resultType="com.project.comment.domain.Comment">
+ 		SELECT
+ 			`id`
+ 			,`diaryId`
+			,`userId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`comment`	
+ 	</select>
+ 	
+ 	<select id="selectCommentByDiaryId" resultType="com.project.comment.domain.Comment">
+ 		SELECT
+ 			`id`
+ 			,`diaryId`
+			,`userId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`comment`
+		WHERE
+			`diaryId` = #{diaryId}		
+ 	</select>
+ </mapper>

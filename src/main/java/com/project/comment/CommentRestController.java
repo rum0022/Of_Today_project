@@ -1,34 +1,29 @@
-package com.project.diary;
+package com.project.comment;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.project.diary.bo.DiaryBO;
+import com.project.comment.bo.CommentBO;
 
 import jakarta.servlet.http.HttpSession;
 
-@RequestMapping("/diary")
+@RequestMapping("/comment")
 @RestController
-public class DiaryRestController {
-
-	@Autowired
-	private DiaryBO diaryBO;
+public class CommentRestController {
 	
+	@Autowired
+	private CommentBO commentBO;
+
 	@PostMapping("/create")
-	public Map<String, Object> create(
+	public Map<String, Object> creat(
+			@RequestParam("diaryId") int diaryId,
 			@RequestParam("content") String content,
-			@RequestParam("decidedDay") @DateTimeFormat(pattern = "yyyy-MM-dd") Date decidedDay,
-			@RequestParam("openYn") boolean openYn,
-			@RequestParam(value = "file", required=false) MultipartFile file,
 			HttpSession session) {
 		
 		Integer userId = (Integer)session.getAttribute("userId");
@@ -36,18 +31,16 @@ public class DiaryRestController {
 		
 		// 응답값
 		Map<String, Object> result = new HashMap<>();
-		
 		if (userId == null) {
 			result.put("code", 500);
-			result.put("error_message", "로그인을 해주세요.");
-			return result;
+			result.put("error_message", "로그인을 해주세요");
 		}
-		// insert DB
-		diaryBO.addDiary(userId, userLoginId, content, decidedDay, openYn, file);
+		
+		// DB insert
+		commentBO.addComment(diaryId, userId, content);
 		
 		result.put("code", 200);
 		result.put("result", "성공");
-		
- 		return result;
+		return result;
 	}
 }

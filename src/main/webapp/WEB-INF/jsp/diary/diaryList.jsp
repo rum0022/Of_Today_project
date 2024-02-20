@@ -2,8 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="d-flex justify-content-center mt-5">
-	<h1>Diary</h1>
+	
 	<div class="contents-box">
+		<h1 class="text-center">Diary</h1>
 		<div class="write-box border rounded m-3">
             <input type="text" id="decidedDay" placeholder="날짜를 입력해주세요" class="w-100">
 			<textarea id="writeTextArea" placeholder="내용을 입력해주세요" class="w-100 border-0"></textarea>
@@ -15,7 +16,7 @@
 				
 				<%-- 공개 비공개 --%>	
 					<div class="form-check form-check-inline ml-2">
-    					<input class="form-check-input" type="checkbox" name="isOpen" id="isOpen">
+    					<input class="form-check-input" type="checkbox" name="openYn" id="openYn">
     					<label class="form-check-label">비밀글 설정</label>
 					</div>
 				
@@ -33,14 +34,14 @@
 		<%-- 일기 영역 --%>
 		<div class="diary-box my-5">
 			<c:forEach items="${diaryList}" var="diary">
-			<%-- 카드1 --%>
+			<%-- 비공개일때 --%>
+			<c:if test="${diary.openYn}">
 			<div class="card border rounded mt-3">
 				<%-- 글쓴이, 더보기(삭제) --%>
 				<div class="p-2 d-flex justify-content-between">
 					<div class="d-flex">
-					<c:if test="${diary.isOpen eq 1}">
 					<img src="/static/img/close.jpg" width=25>
-					</c:if>
+					
 					<span class="font-weight-bold ml-2">${userLoginId}</span>
 					</div>
 					<%-- 날짜 --%>
@@ -49,21 +50,95 @@
 					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${diary.id}">
 						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
 					</a>
-					
 				</div>	
 				
 				<%-- 이미지 --%>
 				<c:if test="${diary.imagePath eq false}">
-				<div class="card-img d-flex ">
+				<div class="card-img d-flex justify-content-center">
 					<img src="${diary.imagePath}" class="w-50" alt="본문 이미지">
 				</div>
 				</c:if>
 				<%-- 글 --%>
 				<div class="card-post m-3">
 					<span>${diary.content}</span>
-				</div>			
+				</div>	
 			 </div>  <%--// 카드1 끝 --%>
-		</c:forEach>
+			 </c:if>	
+			 
+			 <%-- 모두공개일때 --%>
+			 <c:if test="${diary.openYn eq false}">
+				<div class="card border rounded mt-3">
+				<%-- 글쓴이, 더보기(삭제) --%>
+				<div class="p-2 d-flex justify-content-between">
+					<div class="d-flex">
+						<span class="font-weight-bold ml-2">${userLoginId}</span>
+					</div>
+					<%-- 날짜 --%>
+				    <span class="font-weight-bold">${diary.decidedDay}</span>
+					<%--(더보기 ... 버튼)--%>
+					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${diary.id}">
+						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
+					</a>
+				</div>	
+				
+				<%-- 이미지 --%>
+				<c:if test="${diary.imagePath eq false}">
+					<div class="card-img d-flex justify-content-center">
+						<img src="${diary.imagePath}" class="w-50" alt="본문 이미지">
+					</div>
+				</c:if>
+				
+				<%-- 글 --%>
+				<div class="card-post m-3">
+					<span>${diary.content}</span>
+				</div>
+				
+				<%-- 공감 --%>
+				<div class="card-like m-3">
+				<c:if test="${card.filledLike eq false}">
+					<a href="#" class="like-btn" data-post-id="${card.post.id}">
+						<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
+					</a>
+				</c:if>	
+				
+				<c:if test="${card.filledLike eq true}">
+					<a href="#" class="like-btn" data-post-id="${card.post.id}">
+						<img src="https://www.iconninja.com/files/527/809/128/heart-icon.png" width="18" height="18" alt="filled heart">
+					</a>
+				</c:if>	
+					공감 ${card.likeCount}개
+				</div>
+				
+				<%-- 댓글 제목 --%>
+				<div class="card-comment-desc border-bottom">
+					<div class="ml-3 mb-1 font-weight-bold">댓글</div>
+				</div>
+				
+				<%-- 댓글 목록 --%>
+				<div class="card-comment-list m-2">
+					<%-- 댓글 내용들 --%>
+					<c:forEach items="${commentList}" var="comment">
+						<div class="card-comment m-1">
+							<span class="font-weight-bold">${userloginId}</span>
+							<span>${comment.content}</span>
+								
+								<%-- 댓글 삭제 버튼 --%>
+								
+									<a href="#" class="comment-del-btn">
+									<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10" height="10">
+									</a>
+								
+							</div>
+						</c:forEach>	
+					<%-- 댓글 쓰기 --%>
+					<div class="comment-write d-flex border-top mt-2">
+						<input type="text" class="form-control border-0 mr-2 comment-input" placeholder="댓글 달기"/> 
+						<button type="button" class="comment-btn btn btn-light" data-user-id="${userId}" data-diary-id="${diary.id}">게시</button> 
+					</div>
+				</div> <%--// 댓글 목록 끝 --%>				
+				</div>  <%--// 공개끝 --%>
+			 	</c:if>
+			</c:forEach>
 		</div> <%--// 타임라인 영역 끝  --%>
 	</div> <%--// contents-box 끝  --%>
 </div>
@@ -116,16 +191,19 @@
 		// 글쓰기
 		$("#writeBtn").on("click", function() {
 			// alert("게시");
+			
 			let decidedDay = $("#decidedDay").val();
 			let content = $("#writeTextArea").val();
-			let isOpen = $("#isOpen").val();
+			let openYn = $("input:checkbox[id='openYn']").is(":checked");
 			let fileName = $("#file").val();
 			
 			if (!decidedDay) {
 				alert("날짜를 입력해주세요");
+				return;
 			}
 			if (!content) {
 				alert("내용을 입력해주세요");
+				return;
 			}
 			
 			// 파일이 업로드 된경우에만 확장자 체크 검사하고, 업로드 안됐으면 그냥 저장
@@ -146,7 +224,7 @@
 			let formData = new FormData();
 			formData.append("decidedDay", decidedDay);
 			formData.append("content", content);
-			formData.append("isOpen", isOpen);
+			formData.append("openYn", openYn);
 			formData.append("file", $("#file")[0].files[0]);
 			
 			$.ajax({
@@ -171,6 +249,37 @@
 					alert("글을 저장하는데 실패 했습니다.");
 				}
 			});
-		});	
+		});
+		
+		// 공개 댓글쓰기
+		$(".comment-btn").on("click", function() {
+			// alert("게시");
+			
+			let userId = $(this).data("user-id");
+			// alert(userId);
+			let diaryId = $(this).data("diary-id");
+			// alert(diaryId);
+			// 댓글내용가져오기 (div로 같이 묶여있고 댓글 게시 버튼을 눌렀을때 이전의 input태그 내용 가져온다는것)
+			let content = $(this).prev().val().trim();
+			// alert(content);
+			
+			$.ajax({
+				type:"POST"
+				, url:"/comment/create"
+				, data:{"diaryId":diaryId, "content":content}
+				, success:function(data) {
+					if (data.code == 200) {
+						alert("댓글이 저장되었습니다.");
+						location.reload();
+					} else if(data.code == 500) {
+						alert("data.error_message");
+						location.href = "/user/sigh-in-view";
+					}
+				}
+				, error: function(request, status, error) {
+					alert("댓글 쓰기 실패했습니다.");
+				}
+			});
+		});
 	});	
 </script>

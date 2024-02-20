@@ -27,7 +27,7 @@ public class DiaryBO {
 	
 	// insert
 	public DiaryEntity addDiary(int userId, String userLoginId, String content, 
-			Date decidedDay, boolean isOpen, MultipartFile file) {
+			Date decidedDay, boolean openYn, MultipartFile file) {
 		
 		String imagePath = null;
 		if (file != null) {
@@ -38,7 +38,7 @@ public class DiaryBO {
 				.userId(userId)
 				.content(content)
 				.decidedDay(decidedDay)
-				.isOpen(isOpen)
+				.openYn(openYn)
 				.imagePath(imagePath)
 				.build());
 	}
