@@ -25,12 +25,42 @@ public class DiaryTimeLineBO {
 	@Autowired
 	private DiaryBO diaryBO;
 	
+	// 모아보기에서 글 뿌리기
 	public List<DiaryPageView> generateDiaryPageView(Integer userId) {
 		
 		List<DiaryPageView> diaryPageViewList = new ArrayList<>();
 		
 		// 글목록을 다 가져온다
 		List<DiaryEntity> diaryList = diaryBO.getDiaryList();
+		
+		// 글목록 반복문 순회
+		for (DiaryEntity diary : diaryList) {
+			DiaryPageView diaryPageView = new DiaryPageView();
+			
+			// 글을 diaryPageView에 세팅한다
+			diaryPageView.setDiary(diary);
+			
+			// 글쓴이 정보
+			UserEntity user = userBO.getUserEntityByUserId(diary.getUserId());
+			diaryPageView.setUser(user);
+			
+			// 댓글
+			List<CommentView> commentList = commentBO.generateCommentViewListByDiaryId(diary.getId());
+			diaryPageView.setCommentList(commentList);
+			
+			diaryPageViewList.add(diaryPageView);
+		}
+
+		return diaryPageViewList;
+	}
+	
+	// 일기에서 내가 쓴 글 리스트로 뿌리기
+	public List<DiaryPageView> generateDiaryPageViewByUserId(Integer userId) {
+		
+		List<DiaryPageView> diaryPageViewList = new ArrayList<>();
+		
+		// 내가 쓴 글목록을 다 가져온다
+		List<DiaryEntity> diaryList = diaryBO.getDiaryListByUserId(userId);
 		
 		// 글목록 반복문 순회
 		for (DiaryEntity diary : diaryList) {

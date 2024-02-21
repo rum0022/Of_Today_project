@@ -25,6 +25,11 @@ public class DiaryBO {
 		return diaryRepository.findAllByOrderByDecidedDayDesc();
 	}
 	
+	// 본인이 쓴 글만 가져오게 select
+	public List<DiaryEntity> getDiaryListByUserId(int userId) {
+		return diaryRepository.findAllByUserIdOrderByDecidedDayDesc(userId);
+	}
+	
 	// insert
 	public DiaryEntity addDiary(int userId, String userLoginId, String content, 
 			Date decidedDay, boolean openYn, MultipartFile file) {

@@ -9,4 +9,7 @@ import com.project.diary.entity.DiaryEntity;
 public interface DiaryRepository extends JpaRepository<DiaryEntity, Integer>{
 
 	public List<DiaryEntity> findAllByOrderByDecidedDayDesc();
+	
+	public List<DiaryEntity> findAllByUserIdOrderByDecidedDayDesc(int userId);
+	
 }

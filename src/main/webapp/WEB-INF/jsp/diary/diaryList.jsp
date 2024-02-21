@@ -33,19 +33,19 @@
 		
 		<%-- 일기 영역 --%>
 		<div class="diary-box my-5">
-			<c:forEach items="${diaryPageViewList}" var="diaryPageView">
+			<c:forEach items="${diaryPageViewList}" var="pageView">
 			<%-- 비공개일때 --%>
-			<c:if test="${diaryPageView.diary.openYn}">
+			<c:if test="${pageView.diary.openYn}">
 			<div class="card border rounded mt-3">
 				<%-- 글쓴이, 더보기(삭제) --%>
 				<div class="p-2 d-flex justify-content-between">
 					<div class="d-flex">
 					<img src="/static/img/close.jpg" width=25>
 					
-					<span class="font-weight-bold ml-2">${diaryPageView.user.loginId}</span>
+					<span class="font-weight-bold ml-2">${pageView.user.loginId}</span>
 					</div>
 					<%-- 날짜 --%>
-				    <span class="font-weight-bold">${diaryPageView.diary.decidedDay}</span>
+				    <span class="font-weight-bold">${pageView.diary.decidedDay}</span>
 					<%--(더보기 ... 버튼)--%>
 					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${diary.id}">
 						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
@@ -53,28 +53,28 @@
 				</div>	
 				
 				<%-- 이미지 --%>
-				<c:if test="${diaryPageView.diary.imagePath eq false}">
+				<c:if test="${pageView.diary.imagePath eq false}">
 				<div class="card-img d-flex justify-content-center">
-					<img src="${diaryPageView.diary.imagePath}" class="w-50" alt="본문 이미지">
+					<img src="${pageView.diary.imagePath}" class="w-50" alt="본문 이미지">
 				</div>
 				</c:if>
 				<%-- 글 --%>
 				<div class="card-post m-3">
-					<span>${diaryPageView.diary.content}</span>
+					<span>${pageView.diary.content}</span>
 				</div>	
 			 </div>  <%--// 카드1 끝 --%>
 			 </c:if>	
 			 
 			 <%-- 모두공개일때 --%>
-			 <c:if test="${diaryPageView.diary.openYn eq false}">
+			 <c:if test="${pageView.diary.openYn eq false}">
 				<div class="card border rounded mt-3">
 				<%-- 글쓴이, 더보기(삭제) --%>
 				<div class="p-2 d-flex justify-content-between">
 					<div class="d-flex">
-						<span class="font-weight-bold ml-2">${diaryPageView.user.loginId}</span>
+						<span class="font-weight-bold ml-2">${pageView.user.loginId}</span>
 					</div>
 					<%-- 날짜 --%>
-				    <span class="font-weight-bold">${diaryPageView.diary.decidedDay}</span>
+				    <span class="font-weight-bold">${pageView.diary.decidedDay}</span>
 					<%--(더보기 ... 버튼)--%>
 					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${diaryPageView.diary.id}">
 						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
@@ -82,15 +82,15 @@
 				</div>	
 				
 				<%-- 이미지 --%>
-				<c:if test="${diaryPageView.diary.imagePath eq false}">
+				<c:if test="${pageView.diary.imagePath eq false}">
 					<div class="card-img d-flex justify-content-center">
-						<img src="${diaryPageView.diary.imagePath}" class="w-50" alt="본문 이미지">
+						<img src="${pageView.diary.imagePath}" class="w-50" alt="본문 이미지">
 					</div>
 				</c:if>
 				
 				<%-- 글 --%>
 				<div class="card-post m-3">
-					<span>${diaryPageView.diary.content}</span>
+					<span>${pageView.diary.content}</span>
 				</div>
 				
 				<%-- 공감 --%>
@@ -117,10 +117,10 @@
 				<%-- 댓글 목록 --%>
 				<div class="card-comment-list m-2">
 					<%-- 댓글 내용들 --%>
-					<c:forEach items="${diaryPageView.commentList}" var="comment">
+					<c:forEach items="${diaryPageView.commentList}" var="commentView">
 						<div class="card-comment m-1">
-							<span class="font-weight-bold">${diaryPageView.user.loginId}</span>
-							<span>${diaryPageView.commentList.content}</span>
+							<span class="font-weight-bold">${commentView.user.loginId}</span>
+							<span>${commentView.comment.content}</span>
 								
 								<%-- 댓글 삭제 버튼 --%>
 								
@@ -133,7 +133,7 @@
 					<%-- 댓글 쓰기 --%>
 					<div class="comment-write d-flex border-top mt-2">
 						<input type="text" class="form-control border-0 mr-2 comment-input" placeholder="댓글 달기"/> 
-						<button type="button" class="comment-btn btn btn-light" data-user-id="${diaryPageView.user.userId}" data-diary-id="${diaryPageView.diary.id}">게시</button> 
+						<button type="button" class="comment-btn btn btn-light" data-user-id="${pageView.user.id}" data-diary-id="${diaryPageView.diary.id}">게시</button> 
 					</div>
 				</div> <%--// 댓글 목록 끝 --%>				
 				</div>  <%--// 공개끝 --%>

@@ -24,8 +24,9 @@ public class DiaryTimeLineController {
 	public String diaryListView(Model model, HttpSession session) {
 		
 		Integer userId = (Integer)session.getAttribute("userId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
 		
-		List<DiaryPageView> diaryPageViewList= diaryTimeLineBO.generateDiaryPageView(userId);
+		List<DiaryPageView> diaryPageViewList= diaryTimeLineBO.generateDiaryPageViewByUserId(userId);
 		
 		model.addAttribute("diaryPageViewList", diaryPageViewList);
 		model.addAttribute("viewName", "diary/diaryList");
