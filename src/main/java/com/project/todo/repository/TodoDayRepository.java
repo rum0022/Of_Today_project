@@ -14,5 +14,7 @@ public interface TodoDayRepository extends JpaRepository<TodoDayEntity, Integer>
 
 	public List<TodoDayEntity> findAllByUserId(int userId);
 	
+
+	
 	
 }

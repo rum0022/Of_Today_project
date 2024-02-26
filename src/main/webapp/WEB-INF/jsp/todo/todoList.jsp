@@ -25,16 +25,15 @@
 			<div class="diary-box my-5">
 				<%-- 날짜 --%>
 				<div class="mt-3 d-flex justify-content-center">
-					<span class="font-weight-bold">${day.todoDay}</span>
-				</div>	
+					<span class="font-weight-bold">날짜</span>
+				</div>
+					
 				<%-- 글 --%>
-				<c:forEach items="${contentList}" var="content">
 				<div class="m-3 d-flex align-items-center">
 					<input type="checkbox" name="checkboxYn" value="true"> 
-					<div class="ml-2 col-10">${content.content}</div>
+					<div class="ml-2 col-10">내용</div>
 					<button id="deleteBtn" class="btn btn-danger" type="button">삭제</button>
 				</div>
-				</c:forEach>
 			 </div>  
 		
 

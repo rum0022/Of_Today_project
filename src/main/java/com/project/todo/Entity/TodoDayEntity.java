@@ -1,10 +1,8 @@
 package com.project.todo.Entity;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +21,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @Getter
-@Table(name = "day")
+@Table(name = "todo_day")
 @Entity
 public class TodoDayEntity {
 
