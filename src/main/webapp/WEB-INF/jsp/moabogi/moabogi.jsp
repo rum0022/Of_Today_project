@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="d-flex justify-content-center mt-5">
 	<div class="contents-box">
 		<h1 class="text-center">Moabogi</h1>
@@ -16,11 +17,16 @@
 						<span class="font-weight-bold ml-2">${pageView.user.loginId}</span>
 					</div>
 					<%-- 날짜 --%>
-				    <span class="font-weight-bold">${pageView.diary.decidedDay}</span>
+				    <span class="font-weight-bold"><fmt:formatDate value="${pageView.diary.decidedDay}" pattern="yyyy년 MM월 dd일" /></span>
 					<%--(더보기 ... 버튼)--%>
-					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${diaryPageView.diary.id}">
+					<c:if test="${userId eq pageView.diary.userId}">
+					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${pageView.diary.id}">
 						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
 					</a>
+					</c:if>
+					<c:if test="${userId ne pageView.diary.userId}">
+					<div></div>
+					</c:if>
 				</div>	
 				
 				<%-- 이미지 --%>
@@ -59,7 +65,7 @@
 				<%-- 댓글 목록 --%>
 				<div class="card-comment-list m-2">
 					<%-- 댓글 내용들 --%>
-					<c:forEach items="${diaryPageView.commentList}" var="commentView">
+					<c:forEach items="${pageView.commentList}" var="commentView">
 						<div class="card-comment m-1">
 							<span class="font-weight-bold">${commentView.user.loginId}</span>
 							<span>${commentView.comment.content}</span>
@@ -73,7 +79,7 @@
 					<%-- 댓글 쓰기 --%>
 					<div class="comment-write d-flex border-top mt-2">
 						<input type="text" class="form-control border-0 mr-2 comment-input" placeholder="댓글 달기"/> 
-						<button type="button" class="comment-btn btn btn-light" data-user-id="${pageView.user.id}" data-diary-id="${diaryPageView.diary.id}">게시</button> 
+						<button type="button" class="comment-btn btn btn-light" data-user-id="${pageView.user.id}" data-diary-id="${pageView.diary.id}">게시</button> 
 					</div>
 				</div> <%--// 댓글 목록 끝 --%>				
 				</div>  <%--// 공개끝 --%>

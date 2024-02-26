@@ -48,4 +48,12 @@
 		WHERE
 			`diaryId` = #{diaryId}		
  	</select>
+ 	
+ 	<delete id="deleteCommentById">
+		DELETE
+		FROM
+			`comment`
+		WHERE
+			`id` = #{id}	
+	</delete>
  </mapper>

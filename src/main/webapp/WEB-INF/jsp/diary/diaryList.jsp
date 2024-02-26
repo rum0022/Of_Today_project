@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="d-flex justify-content-center mt-5">
 	
 	<div class="contents-box">
@@ -45,7 +46,7 @@
 					<span class="font-weight-bold ml-2">${pageView.user.loginId}</span>
 					</div>
 					<%-- 날짜 --%>
-				    <span class="font-weight-bold">${pageView.diary.decidedDay}</span>
+					<span class="font-weight-bold"><fmt:formatDate value="${pageView.diary.decidedDay}" pattern="yyyy년 MM월 dd일" /></span>
 					<%--(더보기 ... 버튼)--%>
 					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${diary.id}">
 						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
@@ -74,7 +75,7 @@
 						<span class="font-weight-bold ml-2">${pageView.user.loginId}</span>
 					</div>
 					<%-- 날짜 --%>
-				    <span class="font-weight-bold">${pageView.diary.decidedDay}</span>
+					<span class="font-weight-bold"><fmt:formatDate value="${pageView.diary.decidedDay}" pattern="yyyy년 MM월 dd일" /></span>
 					<%--(더보기 ... 버튼)--%>
 					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${diaryPageView.diary.id}">
 						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
@@ -117,23 +118,24 @@
 				<%-- 댓글 목록 --%>
 				<div class="card-comment-list m-2">
 					<%-- 댓글 내용들 --%>
-					<c:forEach items="${diaryPageView.commentList}" var="commentView">
+					<c:forEach items="${pageView.commentList}" var="commentView">
 						<div class="card-comment m-1">
 							<span class="font-weight-bold">${commentView.user.loginId}</span>
 							<span>${commentView.comment.content}</span>
 								
 								<%-- 댓글 삭제 버튼 --%>
-								
-									<a href="#" class="comment-del-btn">
-									<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10" height="10">
+								<c:if test="${userId eq commentView.comment.userId}">
+									<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}">
+										<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10" height="10">
 									</a>
+								</c:if>	
 								
 							</div>
 						</c:forEach>	
 					<%-- 댓글 쓰기 --%>
 					<div class="comment-write d-flex border-top mt-2">
 						<input type="text" class="form-control border-0 mr-2 comment-input" placeholder="댓글 달기"/> 
-						<button type="button" class="comment-btn btn btn-light" data-user-id="${pageView.user.id}" data-diary-id="${diaryPageView.diary.id}">게시</button> 
+						<button type="button" class="comment-btn btn btn-light" data-user-id="${userId}" data-diary-id="${pageView.diary.id}">게시</button> 
 					</div>
 				</div> <%--// 댓글 목록 끝 --%>				
 				</div>  <%--// 공개끝 --%>
@@ -141,6 +143,24 @@
 			</c:forEach>
 		</div> <%--// 타임라인 영역 끝  --%>
 	</div> <%--// contents-box 끝  --%>
+</div>
+
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<%-- modal-sm: 작은 모달창
+		modal-dialog-centered: 수직 기준 가운데 위치 --%>
+	<div class="modal-dialog modal-sm modal-dialog-centered">
+		<div class="modal-content text-center">
+			<div class="py-3 border-bottom">
+    			<a href="#" id="diaryUpdate">수정하기</a>
+    		</div>
+    		<div class="py-3 border-bottom">
+    			<a href="#" id="diaryDelete">삭제하기</a>
+    		</div>
+    		<div class="py-3">
+    			<a href="#" data-dismiss="modal">취소하기</a>
+    		</div>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -255,10 +275,10 @@
 		$(".comment-btn").on("click", function() {
 			// alert("게시");
 			
-			let userId = $(this).data("user-id");
-			// alert(userId);
+			 let userId = $(this).data("user-id");
+			//alert(userId);
 			let diaryId = $(this).data("diary-id");
-			// alert(diaryId);
+			//alert(diaryId);
 			// 댓글내용가져오기 (div로 같이 묶여있고 댓글 게시 버튼을 눌렀을때 이전의 input태그 내용 가져온다는것)
 			let content = $(this).prev().val().trim();
 			// alert(content);
@@ -277,9 +297,47 @@
 					}
 				}
 				, error: function(request, status, error) {
-					alert("댓글 쓰기 실패했습니다.");
+					alert("댓글 쓰기 실패했습니다."); 
 				}
 			});
 		});
-	});	
+		
+		// 댓글 삭제
+		$(".comment-del-btn").on("click", function(e) {
+			// alert("댓글삭제");
+			e.preventDefault();
+			let commentId = $(this).data("comment-id");
+			// alert(commentId);
+			// ajax
+			 $.ajax({ // delete는 포스트방식으로
+				type:"DELETE"
+				, url:"/comment/delete"
+				, data:{"commentId":commentId}
+			 
+			 	, success:function(data) {
+			 		if (data.code == 200) {
+			 			// 성공
+			 			location.reload(true); 
+			 		} else {
+			 			// 실패
+			 			alert(data.error_message);
+			 		}
+			 	}
+			 	, error:function(request, status, error) {
+			 		alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
+			 	}
+			 });
+		});
+		
+		// 모달창띄우기
+		$(".more-btn").on("click", function() {
+			// alert("더보기");
+			let diaryId = $(this).data("diary-id");
+			// 1개로 존재하는 모달에 재활용을 위해 data-post-id를 심는다. ...누를때마다 
+			$("#modal").data("diary-id", diaryId) // "post-id"에 postId를 세팅할것이다.
+			});
+		
+	
+		// 모
+	});
 </script>

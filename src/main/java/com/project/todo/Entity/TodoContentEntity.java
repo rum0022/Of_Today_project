@@ -1,10 +1,9 @@
 package com.project.todo.Entity;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,9 +22,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @Getter
-@Table(name = "day")
+@Table(name = "todo_content")
 @Entity
-public class TodoDayEntity {
+public class TodoContentEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +35,15 @@ public class TodoDayEntity {
 	
 	@Column(name = "todoDay")
 	private String todoDay;
+	
+	@Column(name = "dayId")
+	private int dayId;
+	
+	private String content;
+	
+	@Column(name = "checkBoxYn", columnDefinition = "TINYINT(1)")
+	@ColumnDefault("false") 
+	private boolean checkBoxYn;
 	
 	@UpdateTimestamp
 	@Column(name = "createdAt", updatable = false)
