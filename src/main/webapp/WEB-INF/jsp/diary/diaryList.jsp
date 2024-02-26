@@ -96,18 +96,18 @@
 				
 				<%-- 공감 --%>
 				<div class="card-like m-3">
-				<c:if test="${card.filledLike eq false}">
-					<a href="#" class="like-btn" data-post-id="${card.post.id}">
+				<c:if test="${pageView.filledReaction eq false}">
+					<a href="#" class="reaction-btn" data-diary-id="${pageView.diary.id}">
 						<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
 					</a>
 				</c:if>	
 				
-				<c:if test="${card.filledLike eq true}">
-					<a href="#" class="like-btn" data-post-id="${card.post.id}">
+				<c:if test="${pageView.filledReaction eq true}">
+					<a href="#" class="reaction-btn" data-diary-id="${pageView.diary.id}">
 						<img src="https://www.iconninja.com/files/527/809/128/heart-icon.png" width="18" height="18" alt="filled heart">
 					</a>
 				</c:if>	
-					공감 ${card.likeCount}개
+					공감 ${pageView.reactionCount}개
 				</div>
 				
 				<%-- 댓글 제목 --%>
@@ -327,6 +327,30 @@
 			 		alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
 			 	}
 			 });
+		});
+		
+		// 공감클릭이벤트(토글)
+		$(".reaction-btn").on("click", function(e) {
+			e.preventDefault();
+			 //alert("좋아요");
+			let diaryId = $(this).data("diary-id"); 
+			
+			$.ajax({
+				url:"/reaction/" + diaryId
+				, success:function(data) {
+			 		if (data.code == 200) {
+			 			// 성공
+			 			location.reload(true); 
+			 		} else if (data.code == 300) {
+			 			// 비로그인
+			 			alert(data.error_message);
+			 			location.href = "/user/sign-in-view"
+			 		}
+			 	}
+			 	, error:function(request, status, error) {
+			 		alert("좋아요를 실패했습니다. 관리자에게 문의해주세요.");
+			 	}
+			});
 		});
 		
 		// 모달창띄우기

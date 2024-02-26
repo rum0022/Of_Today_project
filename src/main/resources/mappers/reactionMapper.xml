@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.project.reaction.mapper.ReactionMapper">
+ 	<insert id="insertReaction">
+ 		INSERT INTO `reaction`
+	 	(
+	 		`diaryId`
+	 		, `userId`
+			, `createdAt`
+	 	)	
+		VALUES
+		(
+			#{diaryId}
+ 			, #{userId}
+ 			, NOW()
+		)	
+ 	</insert>
+ 
+	<delete id="deleteReactionByDiaryIdUserId">
+ 		DELETE
+		FROM
+			`reaction`
+		WHERE
+			`diaryId` = #{diaryId}
+			AND `userId` = #{userId}
+ 	</delete>
+ 	
+ 	<!-- 라이크 카운트 쿼리 하나로 합치기 -->
+ 	<select id="selectReactionCountByDiaryIdOrUserId" resultType="int">
+ 		SELECT
+ 			COUNT(1)
+		FROM
+			`reaction`
+		WHERE
+			`diaryId` = #{diaryId}
+			<if test="userId != null">
+			AND `userId` = 	#{userId}	
+			</if>
+ 	</select>
+ 	
+ 	<delete id="deleteReactionByDiaryId">
+		DELETE
+		FROM
+			`reaction`
+		WHERE
+			`diaryId` = #{diaryId}	
+	</delete>
+ </mapper>

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
     
     <h1 class="text-center mt-5">To Do List</h1>
 
@@ -21,24 +20,30 @@
 				</div>
 			</div>
 		</div> <%-- 글쓰기영역 끝 --%>
-
-			<div class="diary-box my-5">
-				<%-- 날짜 --%>
-				<div class="mt-3 d-flex justify-content-center">
-					<span class="font-weight-bold">날짜</span>
-				</div>
-					
-				<%-- 글 --%>
-				<div class="m-3 d-flex align-items-center">
-					<input type="checkbox" name="checkboxYn" value="true"> 
-					<div class="ml-2 col-10">내용</div>
-					<button id="deleteBtn" class="btn btn-danger" type="button">삭제</button>
-				</div>
-			 </div>  
 		
 
-</div>		
-
+		<div class="diary-box my-5"> 
+			 	<%-- 날짜 --%>
+				<c:forEach items="${dayList}" var="dayVO">
+				<div class="mt-3 d-flex justify-content-center">
+					<span class="font-weight-bold">${dayVO.todoDay}</span>
+				</div> 
+					
+				<%-- 글 --%>
+				<c:forEach items="${contentList}" var="contentVO">
+				<c:if test="${contentVO.todoDay eq dayVO.id}">
+					<div class="m-3 d-flex align-items-center">
+						<input type="checkbox" name="checkboxYn" value="true"> 
+						<div class="ml-2 col-10">${contentVO.content}</div>
+						<button id="deleteBtn" class="btn btn-danger" type="button">삭제</button>
+					</div>
+				</c:if>
+				</c:forEach>
+				</c:forEach> 
+			 </div>  
+		</div>	
+	</div>  
+	
 <script>
 	$(document).ready(function() {
 		

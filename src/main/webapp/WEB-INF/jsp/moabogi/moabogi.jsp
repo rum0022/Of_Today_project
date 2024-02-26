@@ -43,18 +43,18 @@
 				
 				<%-- 공감 --%>
 				<div class="card-like m-3">
-				<c:if test="${card.filledLike eq false}">
-					<a href="#" class="like-btn" data-post-id="${card.post.id}">
+				<c:if test="${pageView.filledReaction eq false}">
+					<a href="#" class="reaction-btn" data-diary-id="${pageView.diary.id}">
 						<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
 					</a>
 				</c:if>	
 				
-				<c:if test="${card.filledLike eq true}">
-					<a href="#" class="like-btn" data-post-id="${card.post.id}">
+				<c:if test="${pageView.filledReaction eq true}">
+					<a href="#" class="reaction-btn" data-diary-id="${pageView.diary.id}">
 						<img src="https://www.iconninja.com/files/527/809/128/heart-icon.png" width="18" height="18" alt="filled heart">
 					</a>
 				</c:if>	
-					공감 ${card.likeCount}개
+					공감 ${pageView.reactionCount}개
 				</div>
 				
 				<%-- 댓글 제목 --%>
@@ -71,7 +71,7 @@
 							<span>${commentView.comment.content}</span>
 								
 							<%-- 댓글 삭제 버튼 --%>
-							<a href="#" class="comment-del-btn">
+							<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}">
 								<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10" height="10">
 							</a>
 						</div>
@@ -88,3 +88,118 @@
 		</div> <%--// 타임라인 영역 끝  --%>
 	</div> <%--// contents-box 끝  --%>
 </div>
+
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<%-- modal-sm: 작은 모달창
+		modal-dialog-centered: 수직 기준 가운데 위치 --%>
+	<div class="modal-dialog modal-sm modal-dialog-centered">
+		<div class="modal-content text-center">
+			<div class="py-3 border-bottom">
+    			<a href="#" id="diaryUpdate">수정하기</a>
+    		</div>
+    		<div class="py-3 border-bottom">
+    			<a href="#" id="diaryDelete">삭제하기</a>
+    		</div>
+    		<div class="py-3">
+    			<a href="#" data-dismiss="modal">취소하기</a>
+    		</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+	
+		
+		// 공개 댓글쓰기
+		$(".comment-btn").on("click", function() {
+			// alert("게시");
+			
+			 let userId = $(this).data("user-id");
+			//alert(userId);
+			let diaryId = $(this).data("diary-id");
+			//alert(diaryId);
+			// 댓글내용가져오기 (div로 같이 묶여있고 댓글 게시 버튼을 눌렀을때 이전의 input태그 내용 가져온다는것)
+			let content = $(this).prev().val().trim();
+			// alert(content);
+			
+			$.ajax({
+				type:"POST"
+				, url:"/comment/create"
+				, data:{"diaryId":diaryId, "content":content}
+				, success:function(data) {
+					if (data.code == 200) {
+						alert("댓글이 저장되었습니다.");
+						location.reload();
+					} else if(data.code == 500) {
+						alert("data.error_message");
+						location.href = "/user/sigh-in-view";
+					}
+				}
+				, error: function(request, status, error) {
+					alert("댓글 쓰기 실패했습니다."); 
+				}
+			});
+		});
+		
+		// 댓글 삭제
+		$(".comment-del-btn").on("click", function(e) {
+			// alert("댓글삭제");
+			e.preventDefault();
+			let commentId = $(this).data("comment-id");
+			// alert(commentId);
+			// ajax
+			 $.ajax({ // delete는 포스트방식으로
+				type:"DELETE"
+				, url:"/comment/delete"
+				, data:{"commentId":commentId}
+			 
+			 	, success:function(data) {
+			 		if (data.code == 200) {
+			 			// 성공
+			 			location.reload(true); 
+			 		} else {
+			 			// 실패
+			 			alert(data.error_message);
+			 		}
+			 	}
+			 	, error:function(request, status, error) {
+			 		alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
+			 	}
+			 });
+		});
+		
+		// 공감클릭이벤트(토글)
+		$(".reaction-btn").on("click", function(e) {
+			e.preventDefault();
+			 //alert("좋아요");
+			let diaryId = $(this).data("diary-id"); 
+			
+			$.ajax({
+				url:"/reaction/" + diaryId
+				, success:function(data) {
+			 		if (data.code == 200) {
+			 			// 성공
+			 			location.reload(true); 
+			 		} else if (data.code == 300) {
+			 			// 비로그인
+			 			alert(data.error_message);
+			 			location.href = "/user/sign-in-view"
+			 		}
+			 	}
+			 	, error:function(request, status, error) {
+			 		alert("좋아요를 실패했습니다. 관리자에게 문의해주세요.");
+			 	}
+			});
+		});
+		// 모달창띄우기
+		$(".more-btn").on("click", function() {
+			// alert("더보기");
+			let diaryId = $(this).data("diary-id");
+			// 1개로 존재하는 모달에 재활용을 위해 data-post-id를 심는다. ...누를때마다 
+			$("#modal").data("diary-id", diaryId) // "post-id"에 postId를 세팅할것이다.
+			});
+		
+		
+	});
+</script>

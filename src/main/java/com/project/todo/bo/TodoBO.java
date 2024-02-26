@@ -64,6 +64,8 @@ public class TodoBO {
 						.todoDay(todoDay)
 						.build());
 				
+				 day = todoDayRepository.findByTodoDay(todoDay);
+				
 				// 날짜 저장되고 넘어갈때 dayId 받아주기
 				todoContentRepository.save(TodoContentEntity.builder()
 						.userId(userId)

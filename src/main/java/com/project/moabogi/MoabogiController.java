@@ -22,6 +22,7 @@ public class MoabogiController {
 	public String moabogi(Model model,HttpSession session) {
 		
 	 Integer userId = (Integer)session.getAttribute("userId");
+	 String userLoginId = (String)session.getAttribute("userLoginId");
 	 List<DiaryPageView> diaryPageViewList = diaryTimeLineBO.generateDiaryPageView(userId);
 	 
 		model.addAttribute("diaryPageViewList", diaryPageViewList);

@@ -10,6 +10,7 @@ import com.project.comment.bo.CommentBO;
 import com.project.comment.domain.CommentView;
 import com.project.diary.domain.DiaryPageView;
 import com.project.diary.entity.DiaryEntity;
+import com.project.reaction.bo.ReactionBO;
 import com.project.user.bo.UserBO;
 import com.project.user.entity.UserEntity;
 
@@ -24,6 +25,11 @@ public class DiaryTimeLineBO {
 	
 	@Autowired
 	private DiaryBO diaryBO;
+	
+	@Autowired
+	private ReactionBO reactionBO;
+	
+	
 	
 	// 모아보기에서 글 뿌리기
 	public List<DiaryPageView> generateDiaryPageView(Integer userId) {
@@ -47,6 +53,16 @@ public class DiaryTimeLineBO {
 			// 댓글
 			List<CommentView> commentList = commentBO.generateCommentViewListByDiaryId(diary.getId());
 			diaryPageView.setCommentList(commentList);
+			
+			// 좋아요
+			int reactionCount = reactionBO.getReactionCountByDiaryId(diary.getId());
+			diaryPageView.setReactionCount(reactionCount);
+			
+			// 로그인된 사람이 좋아요를 했는지 여부 (비로그인 사용자 고려)
+			//private boolean filledLike;
+			boolean filledReaction = reactionBO.getReactionCountByDiaryIdUserId(diary.getId(), userId);
+			diaryPageView.setFilledReaction(filledReaction);
+						
 			
 			diaryPageViewList.add(diaryPageView);
 		}
@@ -76,6 +92,13 @@ public class DiaryTimeLineBO {
 			// 댓글
 			List<CommentView> commentList = commentBO.generateCommentViewListByDiaryId(diary.getId());
 			diaryPageView.setCommentList(commentList);
+			
+			// 좋아요
+			int reactionCount = reactionBO.getReactionCountByDiaryId(diary.getId());
+			diaryPageView.setReactionCount(reactionCount);
+			
+			boolean filledReaction = reactionBO.getReactionCountByDiaryIdUserId(diary.getId(), userId);
+			diaryPageView.setFilledReaction(filledReaction);
 			
 			diaryPageViewList.add(diaryPageView);
 		}
