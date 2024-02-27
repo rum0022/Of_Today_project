@@ -12,7 +12,7 @@ public interface TodoDayRepository extends JpaRepository<TodoDayEntity, Integer>
 	
 	public TodoDayEntity findByTodoDay(String todoDay);
 
-	public List<TodoDayEntity> findAllByUserId(int userId);
+	public List<TodoDayEntity> findAllByOrderByTodoDayDesc();
 	
 
 	

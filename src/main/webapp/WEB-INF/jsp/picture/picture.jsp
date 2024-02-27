@@ -4,6 +4,6 @@
 
 <div class="d-flex">
 	<c:forEach items="${pictureList}" var="picture">
-	<div>${picture.diary.diary.imagePath}</div>
+	<div>${picture.diary.imagePath}</div>
 	</c:forEach>
 </div>

@@ -27,8 +27,8 @@ public class TodoBO {
 				.build());
 	}
 	
-	public List<TodoDayEntity> getTodoDayByUserId(int userId) {
-		return todoDayRepository.findAllByUserId(userId);
+	public List<TodoDayEntity> getTodoDayList() {
+		return todoDayRepository.findAllByOrderByTodoDayDesc();
 	}
 	
 	public TodoDayEntity getTodoDayByTodoDay(String todoDay) {
@@ -59,12 +59,10 @@ public class TodoBO {
 			// 그룹테이블인 그 날짜가 있는지
 			if (day == null) {
 				// 없으면 add를 날짜랑 컨텐드 add 두개 다하고
-				todoDayRepository.save(TodoDayEntity.builder()
+				day = todoDayRepository.save(TodoDayEntity.builder() // save 하면서 리턴이 바로됨
 						.userId(userId)
 						.todoDay(todoDay)
 						.build());
-				
-				 day = todoDayRepository.findByTodoDay(todoDay);
 				
 				// 날짜 저장되고 넘어갈때 dayId 받아주기
 				todoContentRepository.save(TodoContentEntity.builder()

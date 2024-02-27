@@ -200,6 +200,13 @@
 			$("#modal").data("diary-id", diaryId) // "post-id"에 postId를 세팅할것이다.
 			});
 		
+		// 모달안에있는 수정하기 클릭 
+		$("#modal #diaryUpdate").on("click", function(e) {
+			e.preventDefault();
+			
+			let diaryId = $("#modal").data("diary-id");
+			alert(diaryId);
+		});
 		
 	});
 </script>

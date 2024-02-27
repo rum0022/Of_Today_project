@@ -24,21 +24,21 @@
 
 		<div class="diary-box my-5"> 
 			 	<%-- 날짜 --%>
-				<c:forEach items="${dayList}" var="dayVO">
-				<div class="mt-3 d-flex justify-content-center">
-					<span class="font-weight-bold">${dayVO.todoDay}</span>
-				</div> 
+				<c:forEach items="${todoCardViewList}" var="todoCard">
+					<div class="mt-3 d-flex justify-content-center">
+						<span class="font-weight-bold">${todoCard.day.todoDay}</span>
+					</div> 
 					
 				<%-- 글 --%>
-				<c:forEach items="${contentList}" var="contentVO">
-				<c:if test="${contentVO.todoDay eq dayVO.id}">
-					<div class="m-3 d-flex align-items-center">
-						<input type="checkbox" name="checkboxYn" value="true"> 
-						<div class="ml-2 col-10">${contentVO.content}</div>
-						<button id="deleteBtn" class="btn btn-danger" type="button">삭제</button>
-					</div>
-				</c:if>
-				</c:forEach>
+					<c:forEach items="${todoCard.contentList}" var="contentView">
+						<c:if test="${contentView.dayId eq todoCard.day.id}">
+							<div class="m-3 d-flex align-items-center">
+								<input type="checkbox" id="checkboxYn" name="checkboxYn" value="true" data-content-id="${contentView.id}"> 
+								<div class="ml-2 col-10">${contentView.content}</div>
+								<button id="deleteBtn" class="btn btn-danger" type="button">삭제</button>
+							</div>
+						</c:if>
+					</c:forEach>
 				</c:forEach> 
 			 </div>  
 		</div>	
@@ -64,7 +64,8 @@
 				// alert(checkboxYn);
 				
 				if (!content) {
-					alert("할 일을 입력해주세요")
+					alert("할 일을 입력해주세요");
+					return;
 				}
 				
 				$.ajax({
@@ -84,6 +85,34 @@
 						alert("글쓰기 실패했습니다."); 
 					}
 				});
-			}); 	
+			});
+		
+		// 체크박스 클릭하면 완료(true)로 변환
+		$("input[type='checkbox']").on('click', function() {
+			// alert("체크");
+			let contentId = $(this).data("content-id");
+			// alert(contentId);
+			let checkboxYn = $("input:checkbox[id='checkboxYn']").is(":checked");
+			// alert(checkboxYn);
+			
+			$.ajax({
+				type:"GET"
+					, url:"/todo/checkBoxYn" 
+					, data:{"contentId":contentId, "checkboxYn":checkboxYn}
+					, success:function(data) {
+						if (data.code == 200) {
+							alert("일정이 완료되었습니다.");
+							location.reload();
+						} else if(data.code == 500) {
+							alert("data.error_message");
+							location.href = "/user/sigh-in-view";
+						}
+					}
+					, error: function(request, status, error) {
+						alert("클릭을 실패했습니다."); 
+					}
+			});
 		});
+		
+	});
 </script>

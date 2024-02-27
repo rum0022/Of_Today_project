@@ -19,6 +19,8 @@ public interface MemoMapper {
 	
 	public List<Memo> selectMemoListByuserId(Integer userId);
 	
+	public List<Memo> selectMemoListByuserIdOrderByCreatedAt(int userId);
+	
 	public Memo selectMemoByMemoIdUserId(
 			@Param("memoId") int memoId,
 			@Param("userId") int userId);

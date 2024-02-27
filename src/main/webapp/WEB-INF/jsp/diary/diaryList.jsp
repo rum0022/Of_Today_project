@@ -48,7 +48,7 @@
 					<%-- 날짜 --%>
 					<span class="font-weight-bold"><fmt:formatDate value="${pageView.diary.decidedDay}" pattern="yyyy년 MM월 dd일" /></span>
 					<%--(더보기 ... 버튼)--%>
-					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${diary.id}">
+					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${pageView.diary.id}">
 						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
 					</a>
 				</div>	
@@ -77,7 +77,7 @@
 					<%-- 날짜 --%>
 					<span class="font-weight-bold"><fmt:formatDate value="${pageView.diary.decidedDay}" pattern="yyyy년 MM월 dd일" /></span>
 					<%--(더보기 ... 버튼)--%>
-					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${diaryPageView.diary.id}">
+					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-diary-id="${pageView.diary.id}">
 						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
 					</a>
 				</div>	
@@ -362,6 +362,14 @@
 			});
 		
 	
-		// 모
+		// 모달안에있는 수정하기 클릭 
+		$("#modal #diaryUpdate").on("click", function(e) {
+			e.preventDefault();
+			
+			let diaryId = $("#modal").data("diary-id");
+			//alert(diaryId);
+			
+			
+		});
 	});
 </script>

@@ -40,6 +40,22 @@
 			`userId` = #{userId}		
  	</select>
  	
+ 	<select id="selectMemoListByuserIdOrderByCreatedAt" resultType="com.project.memo.domain.Memo">
+ 		SELECT
+ 			`id`
+ 			, `userId`
+			, `subject`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`memo`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY createdAt desc			
+ 	</select>
+ 	
  	<select id="selectMemoByMemoIdUserId" resultType="com.project.memo.domain.Memo">
  		SELECT
  			`id`

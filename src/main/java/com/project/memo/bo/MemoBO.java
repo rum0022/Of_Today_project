@@ -39,6 +39,10 @@ public class MemoBO {
 		return memoMapper.selectMemoListByuserId(userId);
 	}
 	
+	public List<Memo> getMemoListByuserIdOrderByCreatedAt(int userId) { // Integer은 가져왔을때 실패하면 null가능 , int는 null이 안되므로 error남 
+		return memoMapper.selectMemoListByuserIdOrderByCreatedAt(userId);
+	}
+	
 	// 상세 화면 select
 	public Memo getMemoByMemoIdUserId(int memoId, int userId) {
 		return memoMapper.selectMemoByMemoIdUserId(memoId, userId);

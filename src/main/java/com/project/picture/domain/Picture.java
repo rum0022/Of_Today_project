@@ -1,6 +1,8 @@
 package com.project.picture.domain;
 
-import com.project.diary.domain.DiaryPageView;
+import java.util.List;
+
+import com.project.diary.entity.DiaryEntity;
 import com.project.memo.domain.Memo;
 import com.project.user.entity.UserEntity;
 
@@ -13,7 +15,7 @@ public class Picture {
 
 	private UserEntity user;
 	
-	private Memo memo;
+	private List<Memo> memo;
 	
-	private DiaryPageView diary;
+	private List<DiaryEntity> diary;
 }
