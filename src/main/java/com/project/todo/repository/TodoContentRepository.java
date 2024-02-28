@@ -11,6 +11,4 @@ public interface TodoContentRepository extends JpaRepository<TodoContentEntity, 
 	public List<TodoContentEntity> findAllByUserId(int userId);
 	
 	
-	
-	
 }

@@ -21,12 +21,12 @@ public class TodoTimeLineBO {
 	@Autowired
 	private UserBO userBO;
 	
+	
 	public List<TodoCardView> generateTodoCardView(Integer userId) {
 		
 		List<TodoCardView> todoCardViewList = new ArrayList<>();
-		
 		// 날짜목록을 다 가져온다
-		List<TodoDayEntity> dayList = todoBO.getTodoDayList();
+		List<TodoDayEntity> dayList = todoBO.getTodoDayByUserIdList(userId);
 		
 		for (TodoDayEntity day : dayList) {
 			TodoCardView todoCardView = new TodoCardView();
@@ -38,7 +38,7 @@ public class TodoTimeLineBO {
 			UserEntity user = userBO.getUserEntityByUserId(day.getUserId());
 			todoCardView.setUser(user);
 			
-			// 댓글
+			//내용
 			List<TodoContentEntity> contentList = todoBO.getTodoContentByuserId(day.getUserId());
 			todoCardView.setContentList(contentList);
 			

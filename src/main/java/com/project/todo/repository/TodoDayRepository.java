@@ -7,11 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.project.todo.Entity.TodoDayEntity;
 
 public interface TodoDayRepository extends JpaRepository<TodoDayEntity, Integer>{
-
-	public List<TodoDayEntity> findAllByOrderByIdDesc();
 	
-	public TodoDayEntity findByTodoDay(String todoDay);
-
+	public TodoDayEntity findByTodoDayAndUserId(String todoDay, int userId);
+	
+	public List<TodoDayEntity> findAllByUserIdOrderByTodoDayDesc(int userId);
+	
 	public List<TodoDayEntity> findAllByOrderByTodoDayDesc();
 	
 

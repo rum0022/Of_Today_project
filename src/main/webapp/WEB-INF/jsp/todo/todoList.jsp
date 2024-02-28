@@ -24,6 +24,7 @@
 
 		<div class="diary-box my-5"> 
 			 	<%-- 날짜 --%>
+			 	
 				<c:forEach items="${todoCardViewList}" var="todoCard">
 					<div class="mt-3 d-flex justify-content-center">
 						<span class="font-weight-bold">${todoCard.day.todoDay}</span>
@@ -32,14 +33,24 @@
 				<%-- 글 --%>
 					<c:forEach items="${todoCard.contentList}" var="contentView">
 						<c:if test="${contentView.dayId eq todoCard.day.id}">
+							<c:if test="${contentView.checkBoxYn eq true}">
+							<div class="m-3 d-flex align-items-center">
+								<input type="checkbox" id="checkboxYn" name="checkboxYn" value="true" data-content-id="${contentView.id}" checked> 
+								<div id="checkBoxY" class="ml-2 col-10 text-success">${contentView.content}</div>
+								<button id="deleteBtn" class="content-del-btn btn btn-danger" type="button" data-content-id="${contentView.id}">삭제</button>
+							</div>
+							</c:if>
+							
+							<c:if test="${contentView.checkBoxYn eq false}">
 							<div class="m-3 d-flex align-items-center">
 								<input type="checkbox" id="checkboxYn" name="checkboxYn" value="true" data-content-id="${contentView.id}"> 
-								<div class="ml-2 col-10">${contentView.content}</div>
-								<button id="deleteBtn" class="btn btn-danger" type="button">삭제</button>
+								<div id="checkBoxF" class="ml-2 col-10">${contentView.content}</div>
+								<button id="deleteBtn" class="content-del-btn btn btn-danger" type="button" data-content-id="${contentView.id}">삭제</button>
 							</div>
+							</c:if>
 						</c:if>
+						</c:forEach>
 					</c:forEach>
-				</c:forEach> 
 			 </div>  
 		</div>	
 	</div>  
@@ -88,7 +99,8 @@
 			});
 		
 		// 체크박스 클릭하면 완료(true)로 변환
-		$("input[type='checkbox']").on('click', function() {
+		$("input[type='checkbox']").on('change', function() {
+			
 			// alert("체크");
 			let contentId = $(this).data("content-id");
 			// alert(contentId);
@@ -96,13 +108,13 @@
 			// alert(checkboxYn);
 			
 			$.ajax({
-				type:"GET"
-					, url:"/todo/checkBoxYn" 
+				type:"PUT"
+					, url:"/todo/update" 
 					, data:{"contentId":contentId, "checkboxYn":checkboxYn}
 					, success:function(data) {
 						if (data.code == 200) {
 							alert("일정이 완료되었습니다.");
-							location.reload();
+							location.reload;
 						} else if(data.code == 500) {
 							alert("data.error_message");
 							location.href = "/user/sigh-in-view";
@@ -114,5 +126,34 @@
 			});
 		});
 		
+		// 삭제하기
+		$(".content-del-btn").on("click", function(e) {
+			//alert("삭제");
+			e.preventDefault();
+		
+			let contentId = $(this).data("content-id");
+			// alert(contentId);
+		
+			// ajax
+			 $.ajax({ // delete는 포스트방식으로
+				type:"DELETE"
+				, url:"/todo/delete"
+				, data:{"contentId":contentId}
+			 
+			 	, success:function(data) {
+			 		if (data.code == 200) {
+			 			// 성공
+			 			location.reload(true); 
+			 		} else {
+			 			// 실패
+			 			alert(data.error_message);
+			 		}
+			 	}
+			 	, error:function(request, status, error) {
+			 		alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
+			 	}
+			 });
+			
+		});
 	});
 </script>

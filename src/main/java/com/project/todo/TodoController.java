@@ -23,7 +23,8 @@ public class TodoController {
 	@GetMapping("/todo-list-view")
 	public String todoListView(Model model, HttpSession session) {
 		
-		Integer userId = (Integer)session.getAttribute("userId");
+		int userId = (int)session.getAttribute("userId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		List<TodoCardView> todoCardViewList = todoTimeLineBO.generateTodoCardView(userId);
 		

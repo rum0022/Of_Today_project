@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.project.todo.Entity.TodoContentEntity;
 import com.project.todo.Entity.TodoDayEntity;
+import com.project.todo.mapper.TodoMapper;
 import com.project.todo.repository.TodoContentRepository;
 import com.project.todo.repository.TodoDayRepository;
+import com.project.user.bo.UserBO;
+import com.project.user.entity.UserEntity;
 
 @Service
 public class TodoBO {
@@ -18,6 +21,9 @@ public class TodoBO {
 	
 	@Autowired
 	private TodoDayRepository todoDayRepository;
+	
+	@Autowired
+	private TodoMapper todoMapper;
 	
 	public TodoDayEntity addTodoDay(int userId, String todoDay) {
 		
@@ -31,8 +37,12 @@ public class TodoBO {
 		return todoDayRepository.findAllByOrderByTodoDayDesc();
 	}
 	
-	public TodoDayEntity getTodoDayByTodoDay(String todoDay) {
-		return todoDayRepository.findByTodoDay(todoDay);
+	public List<TodoDayEntity> getTodoDayByUserIdList(int userId) {
+		return todoDayRepository.findAllByUserIdOrderByTodoDayDesc(userId);
+	}
+	
+	public TodoDayEntity getTodoDayAndUserIdByTodoDay(String todoDay, int userId) {
+		return todoDayRepository.findByTodoDayAndUserId(todoDay, userId);
 	}
 	
 	public TodoContentEntity addTodoContent(int userId, String todoDay,
@@ -53,18 +63,14 @@ public class TodoBO {
 	public void createTodo(int userId, String todoDay,
 			String content, boolean checkboxYn) {
 		
-		TodoDayEntity day = todoDayRepository.findByTodoDay(todoDay);
+		TodoDayEntity day = todoDayRepository.findByTodoDayAndUserId(todoDay,userId);
 		
-		
-			// 그룹테이블인 그 날짜가 있는지
-			if (day == null) {
-				// 없으면 add를 날짜랑 컨텐드 add 두개 다하고
+			if (day == null) {// 그룹테이블인 그 날짜가 있는지
 				day = todoDayRepository.save(TodoDayEntity.builder() // save 하면서 리턴이 바로됨
 						.userId(userId)
 						.todoDay(todoDay)
 						.build());
-				
-				// 날짜 저장되고 넘어갈때 dayId 받아주기
+		
 				todoContentRepository.save(TodoContentEntity.builder()
 						.userId(userId)
 						.dayId(day.getId())
@@ -73,15 +79,23 @@ public class TodoBO {
 						.checkBoxYn(checkboxYn)
 						.build());
 			} else {
-				// 만약 있으면 id 가져올수 있음 -dayId
-				// 이걸로 add를 contentId에 하면됨.
 				todoContentRepository.save(TodoContentEntity.builder()
 						.userId(userId)
-						.todoDay(todoDay)
 						.dayId(day.getId())
+						.todoDay(todoDay)
 						.content(content)
 						.checkBoxYn(checkboxYn)
 						.build());
-			}	
+			}
+		}
+	// 체크박스 유무 
+	public void updateTodoByCheckboxYn(int userId, int contentId, boolean checkboxYn) {
+			todoMapper.updateTodoByCheckboxYn(userId, contentId, checkboxYn);
 	}
+	
+	// delete // todoDay 안에 해당하는 컨텐트개수가 0이라면 카드뷰전체 삭제
+	public void deleteTodoContentByContentId(int contentId) {
+		todoMapper.deleteTodoByContentId(contentId);
+	}
+	
 }

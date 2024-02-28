@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.project.todo.mapper.TodoMapper">
+ 	<update id="updateTodoByCheckboxYn">
+ 		UPDATE `todo_content`
+ 		SET
+ 			`checkboxYn` = #{checkboxYn}
+ 			, `updatedAt` = NOW()
+ 		WHERE
+ 			`id` = #{contentId}	
+ 	</update>
+ 
+ 	<delete id="deleteTodoByContentId">
+		DELETE
+		FROM
+			`todo_content`
+		WHERE
+			`id` = #{id}	
+	</delete>
+	
+	
+ </mapper>
