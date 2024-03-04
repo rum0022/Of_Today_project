@@ -21,6 +21,7 @@ public class PictureBO {
 	@Autowired
 	private DiaryBO diaryBO;
 	
+	
 	public List<Picture> pictureColleteByUserId(Integer userId) {
 		
 		List<Picture> pictureList = new ArrayList<>();

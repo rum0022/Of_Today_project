@@ -98,7 +98,7 @@ public class TodoRestController {
 			return result;
 		}
 		
-		
+		todoBO.deleteTodoContentByContentId(contentId, userId);
 		
 		result.put("code", 200);
 		result.put("result", "성공");

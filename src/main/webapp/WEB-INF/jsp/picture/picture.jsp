@@ -1,14 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<div class="d-flex">
+<div class="picture-parent-box d-flex flex-wrap">
 	<c:forEach items="${pictureList}" var="picture">
-		<c:forEach items="${picture.diaryList}" var="diaryView">
-			<img src="${diaryView.imagePath}" class="w-30" alt="본문 이미지">
-		</c:forEach>
-		<c:forEach items="${picture.memoList}" var="memoView">
-			<img src="${memoView.imagePath}" class="w-30" alt="본문 이미지">
-		</c:forEach>
+		<article class="picture-box">
+		   <c:forEach items="${picture.diaryList}" var="diaryView">
+		   		<c:if test="${diaryView.imagePath ne null}">
+		     		<img src="${diaryView.imagePath}" alt="본문 이미지">
+		       	</c:if>
+		   </c:forEach>
+		</article>
+		<article class="picture-box">
+		   <c:forEach items="${picture.memoList}" var="memoView">
+		   		<c:if test="${memoView.imagePath ne null}">
+		       		<img src="${memoView.imagePath}" alt="본문 이미지">
+		      	</c:if>
+		   </c:forEach>
+		</article>
 	</c:forEach>
-</div>
+ </div>
+   		
+   		
+		

@@ -93,11 +93,11 @@ public class TodoBO {
 	}
 	
 	// delete // todoDay 안에 해당하는 컨텐트개수가 0이라면 카드뷰전체 삭제
-	/*public void deleteTodoContentByContentId(int contentId, int userId, int dayId) {
+	/*public void deleteTodoContentByContentIdAndTodoDay(int contentId, int userId, int dayId) {
 		TodoDayEntity day = todoDayRepository.findByUserIdAndDayId(userId, dayId);
 		List<TodoContentEntity> contentList = todoContentRepository.findAllByUserId(userId);
 		
-		int contentCount = todoContentMapper.selectTodoContentByTodoDayUserId(dayId, userId);
+		int contentCount = todoContentMapper.selectTodoContentByDayIdAndUserId(dayId, userId);
 		for (TodoContentEntity content : contentList) {
 			if (day.getId() == content.getDayId()) {
 				if (contentCount == 0) {
@@ -108,4 +108,7 @@ public class TodoBO {
 		
 	}*/
 	
+	public void deleteTodoContentByContentId(int contentId, int userId) {
+		todoContentMapper.deleteTodoByContentId(contentId);
+	}
 }

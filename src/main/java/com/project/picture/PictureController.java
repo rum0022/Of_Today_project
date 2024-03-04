@@ -22,11 +22,13 @@ public class PictureController {
 	public String pictureView(HttpSession session, Model model) {
 		
 		Integer userId = (Integer)session.getAttribute("userId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		List<Picture> pictureList = pictureBO.pictureColleteByUserId(userId);
 		
 		model.addAttribute("pictureList", pictureList);
 		model.addAttribute("viewName", "picture/picture");
+	
 		
 		return "template/layout";
 	}

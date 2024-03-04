@@ -10,6 +10,6 @@ public interface TodoContentMapper {
 			@Param("contentId") int contentId, 
 			@Param("checkboxYn") boolean checkboxYn);
 	
-	public int deleteTodoByContentId(int contentId);
+	public void deleteTodoByContentId(int contentId);
 	
 }

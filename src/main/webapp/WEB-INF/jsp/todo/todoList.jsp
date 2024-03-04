@@ -26,10 +26,11 @@
 			 	<%-- 날짜 --%>
 			 	
 				<c:forEach items="${todoCardViewList}" var="todoCard">
-					<div class="mt-3 d-flex justify-content-center">
-						<span class="font-weight-bold">${todoCard.day.todoDay}</span>
-					</div> 
-					
+					<c:if test="${!empty todoCard.contentList}">
+						<div class="mt-3 d-flex justify-content-center">
+							<span class="font-weight-bold">${todoCard.day.todoDay}</span>
+						</div> 
+					</c:if>
 				<%-- 글 --%>
 					<c:forEach items="${todoCard.contentList}" var="contentView">
 						<c:if test="${contentView.dayId eq todoCard.day.id}">
