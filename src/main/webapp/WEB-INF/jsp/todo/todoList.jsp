@@ -33,17 +33,17 @@
 				<%-- 글 --%>
 					<c:forEach items="${todoCard.contentList}" var="contentView">
 						<c:if test="${contentView.dayId eq todoCard.day.id}">
-							<c:if test="${contentView.checkBoxYn eq true}">
+							<c:if test="${contentView.checkboxYn eq true}">
 							<div class="m-3 d-flex align-items-center">
-								<input type="checkbox" id="checkboxYn" name="checkboxYn" value="true" data-content-id="${contentView.id}" checked> 
-								<div id="checkBoxY" class="ml-2 col-10 text-success">${contentView.content}</div>
+								<input type="checkbox" id="checkboxYn" name="checkboxYn" data-content-id="${contentView.id}" checked> 
+								<div id="checkBoxY" class="ml-2 col-10"><mark>${contentView.content}</mark></div>
 								<button id="deleteBtn" class="content-del-btn btn btn-danger" type="button" data-content-id="${contentView.id}">삭제</button>
 							</div>
 							</c:if>
 							
-							<c:if test="${contentView.checkBoxYn eq false}">
+							<c:if test="${contentView.checkboxYn eq false}">
 							<div class="m-3 d-flex align-items-center">
-								<input type="checkbox" id="checkboxYn" name="checkboxYn" value="true" data-content-id="${contentView.id}"> 
+								<input type="checkbox" id="checkboxYn" name="checkboxYn" data-content-id="${contentView.id}"> 
 								<div id="checkBoxF" class="ml-2 col-10">${contentView.content}</div>
 								<button id="deleteBtn" class="content-del-btn btn btn-danger" type="button" data-content-id="${contentView.id}">삭제</button>
 							</div>
@@ -71,7 +71,7 @@
 			let todoDay = $("#todoDay").val();
 			let content = $("#content").val().trim();
 				// alert(content);
-			let checkboxYn = $("input:checkbox[id='checkboxYn']").is(":checked");
+			let checkboxYn = $("input:checkbox[id='checkboxYn_id']").is(":checked"); // 여기서는 false안해줘도되나..
 				// alert(checkboxYn);
 				
 				if (!content) {
@@ -113,15 +113,15 @@
 					, data:{"contentId":contentId, "checkboxYn":checkboxYn}
 					, success:function(data) {
 						if (data.code == 200) {
-							alert("일정이 완료되었습니다.");
-							location.reload;
+							alert("일정체크");
+							location.reload();
 						} else if(data.code == 500) {
 							alert("data.error_message");
 							location.href = "/user/sigh-in-view";
 						}
 					}
 					, error: function(request, status, error) {
-						alert("클릭을 실패했습니다."); 
+						alert("일정확인을 실패했습니다."); 
 					}
 			});
 		});

@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.project.todo.Entity.TodoContentEntity;
 import com.project.todo.Entity.TodoDayEntity;
-import com.project.todo.mapper.TodoMapper;
+import com.project.todo.mapper.TodoContentMapper;
 import com.project.todo.repository.TodoContentRepository;
 import com.project.todo.repository.TodoDayRepository;
-import com.project.user.bo.UserBO;
-import com.project.user.entity.UserEntity;
 
 @Service
 public class TodoBO {
@@ -23,7 +21,7 @@ public class TodoBO {
 	private TodoDayRepository todoDayRepository;
 	
 	@Autowired
-	private TodoMapper todoMapper;
+	private TodoContentMapper todoContentMapper;
 	
 	public TodoDayEntity addTodoDay(int userId, String todoDay) {
 		
@@ -52,7 +50,7 @@ public class TodoBO {
 				.userId(userId)
 				.todoDay(todoDay)
 				.content(content)
-				.checkBoxYn(checkboxYn)
+				.checkboxYn(checkboxYn)
 				.build());
 	}
 	
@@ -76,7 +74,7 @@ public class TodoBO {
 						.dayId(day.getId())
 						.todoDay(todoDay)
 						.content(content)
-						.checkBoxYn(checkboxYn)
+						.checkboxYn(checkboxYn)
 						.build());
 			} else {
 				todoContentRepository.save(TodoContentEntity.builder()
@@ -84,18 +82,30 @@ public class TodoBO {
 						.dayId(day.getId())
 						.todoDay(todoDay)
 						.content(content)
-						.checkBoxYn(checkboxYn)
+						.checkboxYn(checkboxYn)
 						.build());
 			}
 		}
 	// 체크박스 유무 
-	public void updateTodoByCheckboxYn(int userId, int contentId, boolean checkboxYn) {
-			todoMapper.updateTodoByCheckboxYn(userId, contentId, checkboxYn);
+	public void updateTodoByCheckboxYn(int contentId, boolean checkboxYn) {
+		
+		todoContentMapper.updateTodoByCheckboxYn(contentId, checkboxYn);
 	}
 	
 	// delete // todoDay 안에 해당하는 컨텐트개수가 0이라면 카드뷰전체 삭제
-	public void deleteTodoContentByContentId(int contentId) {
-		todoMapper.deleteTodoByContentId(contentId);
-	}
+	/*public void deleteTodoContentByContentId(int contentId, int userId, int dayId) {
+		TodoDayEntity day = todoDayRepository.findByUserIdAndDayId(userId, dayId);
+		List<TodoContentEntity> contentList = todoContentRepository.findAllByUserId(userId);
+		
+		int contentCount = todoContentMapper.selectTodoContentByTodoDayUserId(dayId, userId);
+		for (TodoContentEntity content : contentList) {
+			if (day.getId() == content.getDayId()) {
+				if (contentCount == 0) {
+					todoDayRepository.delete(day);
+				}todoContentMapper.deleteTodoByContentId(contentId);
+			}
+		}
+		
+	}*/
 	
 }

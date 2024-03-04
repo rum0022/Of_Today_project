@@ -34,7 +34,7 @@ public class TodoRestController {
 	 */
 	@PostMapping("/create")
 	public Map<String, Object> contentCreate(
-			@RequestParam("todoDay") String todoDay,
+			@RequestParam("todoDay")  String todoDay,
 			@RequestParam("content") String content,
 			@RequestParam("checkboxYn") boolean checkboxYn,
 			Model model, 
@@ -62,7 +62,7 @@ public class TodoRestController {
 	@PutMapping("/update")
 	public Map<String, Object> update(
 			@RequestParam("contentId") int contentId,
-			@RequestParam("checkboxYn") boolean openYn,
+			@RequestParam("checkboxYn") boolean checkboxYn,
 			HttpSession session) {
 		
 		Integer userId = (Integer)session.getAttribute("userId");
@@ -75,7 +75,7 @@ public class TodoRestController {
 			return result;
 		}
 		
-		todoBO.updateTodoByCheckboxYn(userId, contentId, openYn);
+		todoBO.updateTodoByCheckboxYn(contentId, checkboxYn);
 		
 		result.put("code", 200);
 		result.put("result", "성공");
@@ -98,7 +98,7 @@ public class TodoRestController {
 			return result;
 		}
 		
-		todoBO.deleteTodoContentByContentId(contentId);
+		
 		
 		result.put("code", 200);
 		result.put("result", "성공");

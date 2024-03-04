@@ -94,9 +94,6 @@
 		modal-dialog-centered: 수직 기준 가운데 위치 --%>
 	<div class="modal-dialog modal-sm modal-dialog-centered">
 		<div class="modal-content text-center">
-			<div class="py-3 border-bottom">
-    			<a href="#" id="diaryUpdate">수정하기</a>
-    		</div>
     		<div class="py-3 border-bottom">
     			<a href="#" id="diaryDelete">삭제하기</a>
     		</div>
@@ -200,12 +197,27 @@
 			$("#modal").data("diary-id", diaryId) // "post-id"에 postId를 세팅할것이다.
 			});
 		
-		// 모달안에있는 수정하기 클릭 
-		$("#modal #diaryUpdate").on("click", function(e) {
+		// 모달안에있는 삭제하기 클릭 
+		$("#modal #diaryDelete").on("click", function(e) {
 			e.preventDefault();
 			
 			let diaryId = $("#modal").data("diary-id");
-			alert(diaryId);
+			//alert(diaryId);
+			$.ajax({
+				type:"DELETE"
+				, url:"/diary/delete"
+				, data:{"diaryId":diaryId}
+				, success:function(data) {
+					if (data.code == 200) {
+						location.reload();
+					} else {
+						alert(data.error_message);
+					}
+				}
+				, error:function(request, status, error) {
+			 		alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
+			 	}
+			});
 		});
 		
 	});

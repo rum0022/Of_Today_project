@@ -34,9 +34,9 @@ public class PictureBO {
 		Picture picture = new Picture();
 		
 			// 일기 세팅
-			picture.setDiary(diaryList);
-		   
-			picture.setMemo(memoList);
+			picture.setDiaryList(diaryList);
+		   // 메모세팅
+			picture.setMemoList(memoList);
 			 
 			pictureList.add(picture);
 		

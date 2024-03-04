@@ -15,7 +15,7 @@ public class Picture {
 
 	private UserEntity user;
 	
-	private List<Memo> memo;
+	private List<Memo> memoList;
 	
-	private List<DiaryEntity> diary;
+	private List<DiaryEntity> diaryList;
 }

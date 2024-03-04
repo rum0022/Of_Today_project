@@ -10,7 +10,9 @@
         right: 'next'
         },
         defaultView: 'month',
-        navLinks: true, // can click day/week names to navigate views
+       // navLinks: true, // can click day/week names to navigate views
+        selectable: true,
+        selectMirror: true,
         editable: true,
         eventLimit: true // allow "more" link when too many events
     });

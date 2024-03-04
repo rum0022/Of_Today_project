@@ -4,10 +4,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
-public interface TodoMapper {
+public interface TodoContentMapper {
 
-	public void updateTodoByCheckboxYn(
-			@Param("userId") int userId, 
+	public void updateTodoByCheckboxYn( 
 			@Param("contentId") int contentId, 
 			@Param("checkboxYn") boolean checkboxYn);
 	

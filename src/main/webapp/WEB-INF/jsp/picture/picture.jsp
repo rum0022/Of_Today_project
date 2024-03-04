@@ -4,6 +4,11 @@
 
 <div class="d-flex">
 	<c:forEach items="${pictureList}" var="picture">
-	<div>${picture.diary.imagePath}</div>
+		<c:forEach items="${picture.diaryList}" var="diaryView">
+			<img src="${diaryView.imagePath}" class="w-30" alt="본문 이미지">
+		</c:forEach>
+		<c:forEach items="${picture.memoList}" var="memoView">
+			<img src="${memoView.imagePath}" class="w-30" alt="본문 이미지">
+		</c:forEach>
 	</c:forEach>
 </div>

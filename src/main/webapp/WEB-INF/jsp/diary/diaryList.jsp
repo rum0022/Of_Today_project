@@ -150,9 +150,6 @@
 		modal-dialog-centered: 수직 기준 가운데 위치 --%>
 	<div class="modal-dialog modal-sm modal-dialog-centered">
 		<div class="modal-content text-center">
-			<div class="py-3 border-bottom">
-    			<a href="#" id="diaryUpdate">수정하기</a>
-    		</div>
     		<div class="py-3 border-bottom">
     			<a href="#" id="diaryDelete">삭제하기</a>
     		</div>
@@ -363,12 +360,26 @@
 		
 	
 		// 모달안에있는 수정하기 클릭 
-		$("#modal #diaryUpdate").on("click", function(e) {
+		$("#modal #diaryDelete").on("click", function(e) {
 			e.preventDefault();
 			
 			let diaryId = $("#modal").data("diary-id");
 			//alert(diaryId);
-			
+			$.ajax({
+				type:"DELETE"
+				, url:"/diary/delete"
+				, data:{"diaryId":diaryId}
+				, success:function(data) {
+					if (data.code == 200) {
+						location.href = "/diary/diary-list-view"
+					} else {
+						alert(data.error_message);
+					}
+				}
+				, error:function(request, status, error) {
+			 		alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
+			 	}
+			});
 			
 		});
 	});

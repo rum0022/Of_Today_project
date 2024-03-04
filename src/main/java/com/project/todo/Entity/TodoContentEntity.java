@@ -41,9 +41,9 @@ public class TodoContentEntity {
 	
 	private String content;
 	
-	@Column(name = "checkBoxYn", columnDefinition = "TINYINT(1)")
-	@ColumnDefault("false") 
-	private boolean checkBoxYn;
+	@Column(name = "checkboxYn", columnDefinition = "TINYINT(1)")
+	//@ColumnDefault("false")  이거 안써줘도될거같은데
+	private boolean checkboxYn;
 	
 	@UpdateTimestamp
 	@Column(name = "createdAt", updatable = false)

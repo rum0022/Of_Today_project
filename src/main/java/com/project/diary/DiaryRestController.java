@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,15 @@ public class DiaryRestController {
 	@Autowired
 	private DiaryBO diaryBO;
 	
+	/**
+	 * 다이어리 게시 API
+	 * @param content
+	 * @param decidedDay
+	 * @param openYn
+	 * @param file
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> create(
 			@RequestParam("content") String content,
@@ -44,6 +54,32 @@ public class DiaryRestController {
 		}
 		// insert DB
 		diaryBO.addDiary(userId, userLoginId, content, decidedDay, openYn, file);
+		
+		result.put("code", 200);
+		result.put("result", "성공");
+		
+ 		return result;
+	}
+	
+	
+	@DeleteMapping("/delete")
+	public Map<String, Object> delete(
+			@RequestParam("diaryId") int diaryId,
+			HttpSession session) {
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
+		
+		// 응답값
+		Map<String, Object> result = new HashMap<>();
+		
+		if (userId == null) {
+			result.put("code", 500);
+			result.put("error_message", "로그인을 해주세요.");
+			return result;
+		}
+		// delete DB
+		diaryBO.deleteDiaryByDiaryIdUserId(diaryId, userId);
 		
 		result.put("code", 200);
 		result.put("result", "성공");
