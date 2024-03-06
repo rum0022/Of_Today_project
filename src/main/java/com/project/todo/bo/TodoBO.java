@@ -1,6 +1,9 @@
 package com.project.todo.bo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +46,10 @@ public class TodoBO {
 		return todoDayRepository.findByTodoDayAndUserId(todoDay, userId);
 	}
 	
+	public TodoDayEntity getTodoDayAndUserId(int userId) {
+		return todoDayRepository.findByUserId(userId);
+	}
+	
 	public TodoContentEntity addTodoContent(int userId, String todoDay,
 			String content, boolean checkboxYn) {
 		
@@ -54,9 +61,33 @@ public class TodoBO {
 				.build());
 	}
 	
+	public List<TodoContentEntity> getTodoContentByuserIdAndDayId(int userId, int dayId) {
+		return todoContentRepository.findAllByUserIdAndDayId(userId, dayId);
+	}
+	
 	public List<TodoContentEntity> getTodoContentByuserId(int userId) {
 		return todoContentRepository.findAllByUserId(userId);
 	}
+	
+	public List<Map<String, String>> getTodoCalendar(int userId, String userLoginId) {
+		
+		
+		//List<TodoDayEntity> dayList = todoDayRepository.findAllByUserIdOrderByTodoDayDesc(userId);
+		List<TodoContentEntity> contentList = todoContentRepository.findAllByUserId(userId);
+		
+		List<Map<String, String>> resultList = new ArrayList<>();
+		
+			for (int i = 0; i < contentList.size(); i++) {
+				Map<String, String> result = new HashMap<>();
+				result.put("title", contentList.get(i).getContent());
+				result.put("start", contentList.get(i).getTodoDay());
+				
+				resultList.add(result);
+			}
+		
+		return resultList;
+	}
+	
 	
 	public void createTodo(int userId, String todoDay,
 			String content, boolean checkboxYn) {
@@ -69,13 +100,14 @@ public class TodoBO {
 						.todoDay(todoDay)
 						.build());
 		
-				todoContentRepository.save(TodoContentEntity.builder()
+			todoContentRepository.save(TodoContentEntity.builder()
 						.userId(userId)
 						.dayId(day.getId())
 						.todoDay(todoDay)
 						.content(content)
 						.checkboxYn(checkboxYn)
 						.build());
+				
 			} else {
 				todoContentRepository.save(TodoContentEntity.builder()
 						.userId(userId)

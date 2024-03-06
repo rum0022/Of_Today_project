@@ -9,7 +9,9 @@ public class MainController {
 
 	@GetMapping("/main/main-view")
 	public String mainView(Model model) {
+		
 		model.addAttribute("viewName", "main/main");
 		return "template/layout";
 	}
+	
 }

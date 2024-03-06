@@ -8,8 +8,9 @@ import com.project.todo.Entity.TodoContentEntity;
 
 public interface TodoContentRepository extends JpaRepository<TodoContentEntity, Integer>{
 
+	public List<TodoContentEntity> findAllByUserIdAndDayId(int userId, int dayId);
+	
 	public List<TodoContentEntity> findAllByUserId(int userId);
-
 	
 	
 	

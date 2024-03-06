@@ -1,11 +1,13 @@
 package com.project.todo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -105,5 +107,22 @@ public class TodoRestController {
 		
  		return result;
 		
+	}
+	
+	@GetMapping("/todo-calendar")
+	public List<Map<String, String>> todoCalendar(HttpSession session) {
+		
+		int userId = (int) session.getAttribute("userId");
+		String userLoginId = (String) session.getAttribute("userLoginId");
+		
+//		List<Map<String, Object>> resultList = new ArrayList<>();
+//		
+//		Map<String, Object> content = new HashMap<>();
+//		
+//		content.put("title", "학원가기");
+//		content.put("start", "2024-03-25");
+//		
+//		resultList.add(content);
+ 		return todoBO.getTodoCalendar(userId, userLoginId);
 	}
 }

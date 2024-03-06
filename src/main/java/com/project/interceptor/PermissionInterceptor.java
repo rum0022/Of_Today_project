@@ -29,8 +29,28 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 		Integer userId = (Integer)session.getAttribute("userId");
 		
-		// 비로그인 && /post 경로로 접근하는경우 => 로그인 페이지로 이동, 컨트롤러 수행 방지
-		if (userId == null && uri.startsWith("/post")) {
+		// 비로그인 && /diary 경로로 접근하는경우 => 로그인 페이지로 이동, 컨트롤러 수행 방지
+		if (userId == null && uri.startsWith("/diary")) {
+			response.sendRedirect("/user/sign-in-view");
+			return false; // 반드시 해야함 , 원래 요청에 대하여 컨트롤러 수행 안함.
+		}
+		
+		if (userId == null && uri.startsWith("/moabogi")) {
+			response.sendRedirect("/user/sign-in-view");
+			return false; // 반드시 해야함 , 원래 요청에 대하여 컨트롤러 수행 안함.
+		}
+		
+		if (userId == null && uri.startsWith("/memo")) {
+			response.sendRedirect("/user/sign-in-view");
+			return false; // 반드시 해야함 , 원래 요청에 대하여 컨트롤러 수행 안함.
+		}
+		
+		if (userId == null && uri.startsWith("/todo")) {
+			response.sendRedirect("/user/sign-in-view");
+			return false; // 반드시 해야함 , 원래 요청에 대하여 컨트롤러 수행 안함.
+		}
+		
+		if (userId == null && uri.startsWith("/picture")) {
 			response.sendRedirect("/user/sign-in-view");
 			return false; // 반드시 해야함 , 원래 요청에 대하여 컨트롤러 수행 안함.
 		}

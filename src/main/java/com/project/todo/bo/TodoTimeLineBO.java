@@ -39,7 +39,7 @@ public class TodoTimeLineBO {
 			todoCardView.setUser(user);
 			
 			//내용
-			List<TodoContentEntity> contentList = todoBO.getTodoContentByuserId(day.getUserId());
+			List<TodoContentEntity> contentList = todoBO.getTodoContentByuserIdAndDayId(day.getUserId(), day.getId());
 			todoCardView.setContentList(contentList);
 			
 			todoCardViewList.add(todoCardView);
