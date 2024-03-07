@@ -61,6 +61,13 @@ public class TodoRestController {
  		return result;
 	}
 
+	/**
+	 * todo 일정완료 api
+	 * @param contentId
+	 * @param checkboxYn
+	 * @param session
+	 * @return
+	 */
 	@PutMapping("/update")
 	public Map<String, Object> update(
 			@RequestParam("contentId") int contentId,
@@ -85,6 +92,12 @@ public class TodoRestController {
  		return result;
 	}
 	
+	/**
+	 * todo delete
+	 * @param contentId
+	 * @param session
+	 * @return
+	 */
 	@DeleteMapping("/delete")
 	public Map<String, Object> delete(
 			@RequestParam("contentId") int contentId,
@@ -109,6 +122,7 @@ public class TodoRestController {
 		
 	}
 	
+	// calendar db연동 api
 	@GetMapping("/todo-calendar")
 	public List<Map<String, String>> todoCalendar(HttpSession session) {
 		

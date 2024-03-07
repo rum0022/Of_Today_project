@@ -21,6 +21,13 @@ public class CommentRestController {
 	@Autowired
 	private CommentBO commentBO;
 
+	/**
+	 * comment insert
+	 * @param diaryId
+	 * @param content
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> create(
 			@RequestParam("diaryId") int diaryId,
@@ -45,6 +52,13 @@ public class CommentRestController {
 		return result;
 	}
 	
+	
+	/**
+	 * comment delete
+	 * @param commentId
+	 * @param session
+	 * @return
+	 */
 	@DeleteMapping("/delete")
 	public Map<String, Object> delete(
 			@RequestParam("commentId") int commentId,

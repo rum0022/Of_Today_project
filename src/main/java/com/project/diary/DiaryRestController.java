@@ -61,7 +61,12 @@ public class DiaryRestController {
  		return result;
 	}
 	
-	
+	/**
+	 * 다이어리 delete
+	 * @param diaryId
+	 * @param session
+	 * @return
+	 */
 	@DeleteMapping("/delete")
 	public Map<String, Object> delete(
 			@RequestParam("diaryId") int diaryId,

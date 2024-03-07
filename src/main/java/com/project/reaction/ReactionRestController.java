@@ -18,8 +18,6 @@ public class ReactionRestController {
 	@Autowired
 	private ReactionBO reactionBO;
 
-	// 1) GET: /like?postId=13         @RequestParam("postId")
-	// 2) GET: /like/13                @PathVariable  (패스안의 값을 꺼내오겠다)
 	@RequestMapping("/reaction/{diaryId}") // 겟이랑 포스트 다 가능이므로
 	public Map<String, Object> reactionToggle(
 			@PathVariable(name = "diaryId") int diaryId,

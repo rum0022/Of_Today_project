@@ -6,14 +6,14 @@
 		<article class="picture-box">
 		   <c:forEach items="${picture.diaryList}" var="diaryView">
 		   		<c:if test="${diaryView.imagePath ne null}">
-		     		<img src="${diaryView.imagePath}" alt="본문 이미지">
+		     		<img src="${diaryView.imagePath}" width="350" alt="본문 이미지">
 		       	</c:if>
 		   </c:forEach>
 		</article>
 		<article class="picture-box">
 		   <c:forEach items="${picture.memoList}" var="memoView">
 		   		<c:if test="${memoView.imagePath ne null}">
-		       		<img src="${memoView.imagePath}" alt="본문 이미지">
+		       		<img src="${memoView.imagePath}" width="350" alt="본문 이미지">
 		      	</c:if>
 		   </c:forEach>
 		</article>

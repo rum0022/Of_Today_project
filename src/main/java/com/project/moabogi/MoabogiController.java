@@ -18,6 +18,7 @@ public class MoabogiController {
 	@Autowired
 	private DiaryTimeLineBO diaryTimeLineBO;
 	
+	// 모아보기 view
 	@GetMapping("/moabogi/moabogi-view")
 	public String moabogi(Model model,HttpSession session) {
 		

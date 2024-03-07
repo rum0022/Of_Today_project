@@ -26,6 +26,7 @@ public class TodoBO {
 	@Autowired
 	private TodoContentMapper todoContentMapper;
 	
+	// day insert
 	public TodoDayEntity addTodoDay(int userId, String todoDay) {
 		
 		return todoDayRepository.save(TodoDayEntity.builder()
@@ -34,22 +35,27 @@ public class TodoBO {
 				.build());
 	}
 	
+	// TodoDay 전체 다 가져오기
 	public List<TodoDayEntity> getTodoDayList() {
 		return todoDayRepository.findAllByOrderByTodoDayDesc();
 	}
 	
+	// select
 	public List<TodoDayEntity> getTodoDayByUserIdList(int userId) {
 		return todoDayRepository.findAllByUserIdOrderByTodoDayDesc(userId);
 	}
 	
+	// select
 	public TodoDayEntity getTodoDayAndUserIdByTodoDay(String todoDay, int userId) {
 		return todoDayRepository.findByTodoDayAndUserId(todoDay, userId);
 	}
 	
+	// select
 	public TodoDayEntity getTodoDayAndUserId(int userId) {
 		return todoDayRepository.findByUserId(userId);
 	}
 	
+	// content insert
 	public TodoContentEntity addTodoContent(int userId, String todoDay,
 			String content, boolean checkboxYn) {
 		
@@ -61,14 +67,17 @@ public class TodoBO {
 				.build());
 	}
 	
+	// select
 	public List<TodoContentEntity> getTodoContentByuserIdAndDayId(int userId, int dayId) {
 		return todoContentRepository.findAllByUserIdAndDayId(userId, dayId);
 	}
 	
+	// select
 	public List<TodoContentEntity> getTodoContentByuserId(int userId) {
 		return todoContentRepository.findAllByUserId(userId);
 	}
 	
+	// 캘린더에 뿌릴 컨텐츠 select
 	public List<Map<String, String>> getTodoCalendar(int userId, String userLoginId) {
 		
 		
@@ -88,7 +97,7 @@ public class TodoBO {
 		return resultList;
 	}
 	
-	
+	// insert
 	public void createTodo(int userId, String todoDay,
 			String content, boolean checkboxYn) {
 		
@@ -124,22 +133,7 @@ public class TodoBO {
 		todoContentMapper.updateTodoByCheckboxYn(contentId, checkboxYn);
 	}
 	
-	// delete // todoDay 안에 해당하는 컨텐트개수가 0이라면 카드뷰전체 삭제
-	/*public void deleteTodoContentByContentIdAndTodoDay(int contentId, int userId, int dayId) {
-		TodoDayEntity day = todoDayRepository.findByUserIdAndDayId(userId, dayId);
-		List<TodoContentEntity> contentList = todoContentRepository.findAllByUserId(userId);
-		
-		int contentCount = todoContentMapper.selectTodoContentByDayIdAndUserId(dayId, userId);
-		for (TodoContentEntity content : contentList) {
-			if (day.getId() == content.getDayId()) {
-				if (contentCount == 0) {
-					todoDayRepository.delete(day);
-				}todoContentMapper.deleteTodoByContentId(contentId);
-			}
-		}
-		
-	}*/
-	
+	// delete
 	public void deleteTodoContentByContentId(int contentId, int userId) {
 		todoContentMapper.deleteTodoByContentId(contentId);
 	}

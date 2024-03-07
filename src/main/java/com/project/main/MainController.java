@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
+	// 달력 view
 	@GetMapping("/main/main-view")
 	public String mainView(Model model) {
 		

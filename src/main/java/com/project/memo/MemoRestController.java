@@ -52,7 +52,15 @@ public class MemoRestController {
 		 	
 		return result; 	
 	}
-	
+	/**
+	 * 메모 수정 api
+	 * @param memoId
+	 * @param subject
+	 * @param content
+	 * @param file
+	 * @param session
+	 * @return
+	 */
 	@PutMapping("/update")
 	public Map<String, Object> update(
 			@RequestParam("memoId") int memoId,
@@ -75,6 +83,12 @@ public class MemoRestController {
 			return result;
 	}
 	
+	/**
+	 * 메모 삭제 api
+	 * @param memoId
+	 * @param session
+	 * @return
+	 */
 	@DeleteMapping("/delete")
 	public Map<String, Object> delete(
 			@RequestParam("memoId") int memoId,
