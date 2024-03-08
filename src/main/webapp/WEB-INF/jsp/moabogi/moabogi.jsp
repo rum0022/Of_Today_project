@@ -71,9 +71,11 @@
 							<span>${commentView.comment.content}</span>
 								
 							<%-- 댓글 삭제 버튼 --%>
-							<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}">
-								<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10" height="10">
-							</a>
+							<c:if test="${userId eq commentView.comment.userId}">
+								<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}">
+									<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10" height="10">
+								</a>
+							</c:if>	
 						</div>
 					</c:forEach>	
 					<%-- 댓글 쓰기 --%>
