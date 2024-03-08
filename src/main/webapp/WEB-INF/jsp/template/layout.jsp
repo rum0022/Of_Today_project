@@ -33,7 +33,7 @@
 			<jsp:include page="../include/header.jsp"></jsp:include>
 			</div>
 			<div class="calendar d-flex align-items-center justify-content-center">
-			<h2 class="ml-5">달력그림</h2>
+			<%-- <h2 class="ml-5">달력그림</h2>--%>
 			</div>
 		</header>
 		<section class="contents d-flex">
